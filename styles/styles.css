@@ -333,11 +333,25 @@ button:focus-visible {
 /* sections */
 .section {
   display: block;
+  padding: var(--spacing-xxl) var(--spacing-m);
 
   > .default-content {
     max-width: var(--grid-container-width);
     margin: 0 auto;
   }
+
+  > .block-content {
+    max-width: var(--grid-container-width);
+    margin: 0 auto;
+  }
+}
+
+main > .section:first-child {
+  padding-top: 0;
+}
+
+main .section h2 {
+  margin-bottom: var(--spacing-l);
 }
 
 /* section variants */

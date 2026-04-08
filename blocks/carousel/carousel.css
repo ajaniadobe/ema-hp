@@ -66,6 +66,7 @@
 }
 
 .carousel .carousel-slide .carousel-slide-content p {
+  display: inline;
   font-size: var(--body-font-size-s);
   color: var(--color-foreground-medium);
   margin: 0 0 var(--spacing-m);
@@ -100,6 +101,10 @@
   color: var(--color-gray-12);
   border: 1px solid var(--color-gray-12);
   margin-left: var(--spacing-s);
+}
+
+.carousel .carousel-slide .carousel-slide-content p a {
+  margin-top: var(--spacing-s);
 }
 
 .carousel .carousel-slide .carousel-slide-content a + a:hover {
