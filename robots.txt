@@ -1,7 +1,10 @@
-# Robots.txt - Friendly to LLM and SEO crawlers
-# Last updated: 2025-07-23
+# HP Edge Delivery Services
+# Last updated: 2026-04-08
 
 User-agent: *
-Allow: /
+Allow: /us-en/
+Disallow: /fragments/
+Disallow: /tools/
+Disallow: /drafts/
 
-Sitemap: https://docs.da.live/sitemap.xml
+Sitemap: https://main--ema-hp--ajaniadobe.aem.live/sitemap.xml
