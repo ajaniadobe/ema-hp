@@ -52,16 +52,9 @@ export default function init(block) {
           body.className = 'cards-card-body';
           body.append(h3);
 
-          let next = body.querySelector('h3')
-            ? null
-            : h3.nextElementSibling;
-          // Re-check: h3 was moved into body, so check dc directly
-          const dcChildren = [...dc.children];
-          const h3Idx = dcChildren.indexOf(h3);
-          // h3 is now in body, scan remaining dc children
+          // h3 was moved into body, scan remaining dc children
           let sib = dc.children[0];
           const toMove = [];
-          let foundH3 = false;
           while (sib) {
             const nextSib = sib.nextElementSibling;
             if (sib.tagName === 'H3') break;
