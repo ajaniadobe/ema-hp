@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "https://www.hp.com/us-en/sustainable-impact.html",
+  "path": "us-en/sustainable-impact",
+  "timestamp": "2026-04-08T07:46:18.216Z",
+  "title": "Sustainable Impact | HP® Official Site",
+  "template": "content-editorial",
+  "blocks": [
+    "hero",
+    "cards",
+    "cards",
+    "cards",
+    "cards",
+    "cards",
+    "cards",
+    "cards"
+  ]
+}

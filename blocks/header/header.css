@@ -11,7 +11,9 @@ header {
   z-index: 1000;
   overflow: hidden;
   max-height: var(--header-height);
-  background-color: light-dark(var(--color-light), var(--color-dark));
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-stroke-decorative);
+  font-size: var(--body-font-size-s);
 
   ul {
     margin: 0;
@@ -174,7 +176,7 @@ header {
     }
 
     > .block-content {
-      border-bottom: 1px solid light-dark(var(--color-gray-200), var(--color-gray-600));
+      border-bottom: 1px solid var(--color-stroke-decorative);
     }
 
     .action-wrapper {
@@ -201,7 +203,7 @@ header {
     }
 
     .main-nav-item {
-      border-bottom: 1px solid light-dark(var(--color-gray-200), var(--color-gray-600));
+      border-bottom: 1px solid var(--color-stroke-decorative);
 
       > * {
         max-width: var(--grid-container-width);
@@ -212,6 +214,8 @@ header {
     .main-nav-link {
       display: block;
       line-height: 64px;
+      font-weight: 400;
+      color: var(--color-gray-12);
     }
 
     .menu,
@@ -221,7 +225,7 @@ header {
 
     .is-open {
       .main-nav-link {
-        border-bottom: 1px solid light-dark(var(--color-gray-200), var(--color-gray-600));
+        border-bottom: 1px solid var(--color-stroke-decorative);
       }
 
       .menu,
@@ -242,7 +246,7 @@ header {
     }
 
     .brand-section {
-      border-bottom: 1px solid light-dark(var(--color-gray-200), var(--color-gray-600));
+      border-bottom: 1px solid var(--color-stroke-decorative);
     }
   }
 }

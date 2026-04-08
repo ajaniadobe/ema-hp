@@ -1,0 +1,52 @@
+.icon-grid-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--spacing-m);
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+.icon-grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-s);
+  padding: var(--spacing-l);
+  border-radius: var(--button-border-radius);
+  text-decoration: none;
+  color: var(--color-foreground-default);
+  text-align: center;
+  transition: background-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.icon-grid-card:hover {
+  background-color: var(--color-gray-1);
+  box-shadow: var(--shadow-sm);
+}
+
+.icon-grid-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-grid-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.icon-grid-title {
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+@media (width >= 600px) {
+  .icon-grid-items {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}

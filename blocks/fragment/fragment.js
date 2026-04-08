@@ -29,13 +29,14 @@ function applyPageStyles(fragment) {
  * @returns {HTMLElement} The root element of the fragment
  */
 export async function loadFragment(path) {
-  const resp = await fetch(`${path}`);
+  const resp = await fetch(`${path}.plain.html`);
   if (!resp.ok) throw Error(`Couldn't fetch ${path}`);
 
   const html = await resp.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
 
-  const sections = doc.body.querySelectorAll('main > div');
+  let sections = doc.body.querySelectorAll('main > div');
+  if (!sections.length) sections = doc.body.querySelectorAll(':scope > div');
   const fragment = document.createElement('div');
   fragment.classList.add('fragment-content');
   fragment.append(...sections);
@@ -105,8 +106,11 @@ export default async function init(a) {
       ? fragment.querySelectorAll(':scope > *')
       : [fragment];
     for (const [idx, child] of children.entries()) {
-      // If relative, create a unique ID to help fragments be identified after being inserted into the page
-      if (path.startsWith('/')) child.id = btoa(encodeURIComponent(`${path}/${idx + 1}`));
+      // Create a unique ID to help identify fragments
+      if (path.startsWith('/')) {
+        const encoded = encodeURIComponent(`${path}/${idx + 1}`);
+        child.id = btoa(encoded);
+      }
       elToReplace.insertAdjacentElement('afterend', child);
     }
     elToReplace.remove();

@@ -1,11 +1,11 @@
 .hero {
-  --gradient-start: rgb(var(--color-dark-base) / 80%);
-  --gradient-end: rgb(var(--color-dark-base) / 20%);
-  --default-min-height: 360px;
+  --gradient-start: rgb(var(--color-dark-base) / 60%);
+  --gradient-end: rgb(var(--color-dark-base) / 10%);
+  --default-min-height: 400px;
   --min-height: var(--default-min-height);
 
   position: relative;
-  color: #fff;
+  color: var(--color-white);
   overflow: hidden;
 
   &.small {
@@ -36,7 +36,11 @@
       position: absolute;
       inset: 0;
       backdrop-filter: blur(200px);
-      mask-image: linear-gradient(to right bottom, rgb(0 0 0 / 80%) 40%, rgb(0 0 0 / 20%) 125%);
+      mask-image: linear-gradient(
+        to right bottom,
+        rgb(0 0 0 / 80%) 40%,
+        rgb(0 0 0 / 20%) 125%
+      );
     }
   }
 
@@ -66,7 +70,6 @@
     }
 
     > div {
-      /* Used for quiet-background */
       background-color: var(--color-background);
       position: absolute;
       inset: 0;
@@ -87,10 +90,15 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    background: linear-gradient(90deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    background: linear-gradient(
+      90deg,
+      var(--gradient-start) 0%,
+      var(--gradient-end) 100%
+    );
 
     p {
-      margin: 8px 0;
+      margin: var(--spacing-s) 0;
+      font-size: var(--body-font-size-l);
     }
 
     .fg-text {
@@ -108,10 +116,28 @@
 
     .hero-detail {
       margin: 0;
+      font-size: var(--body-font-size-s);
+      opacity: 0.85;
     }
 
     .hero-heading {
       margin: 0;
+      font-size: var(--heading-font-size-xl);
+      font-weight: var(--heading-font-weight);
+    }
+
+    h3 {
+      font-size: var(--heading-font-size-s);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .btn {
+      min-width: var(--button-min-width);
     }
   }
 
@@ -124,12 +150,12 @@
     }
 
     .hero-foreground {
-      background: #111;
+      background: var(--color-gray-12);
     }
 
     &.light {
       .hero-foreground {
-        background: #f9f9f9;
+        background: var(--color-gray-0);
       }
     }
 
@@ -167,6 +193,10 @@
       .fg-text {
         width: unset;
         margin: unset;
+      }
+
+      .hero-heading {
+        font-size: var(--heading-font-size-xxl);
       }
     }
 
