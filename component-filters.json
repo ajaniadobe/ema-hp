@@ -30,7 +30,10 @@
               "icon-grid",
               "badge-row",
               "promo-banner",
-              "accordion"
+              "accordion",
+              "product-card",
+              "comparison-table",
+              "feature-carousel"
             ]
           }
         }

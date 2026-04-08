@@ -1,0 +1,97 @@
+.comparison-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--spacing-s);
+}
+
+.comparison-table-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.comparison-table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--color-gray-4);
+  border-radius: 2px;
+}
+
+.comparison-table-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-width: calc(var(--col-count, 3) * 240px);
+}
+
+.comparison-table-row {
+  display: grid;
+  grid-template-columns: repeat(var(--col-count, 3), 1fr);
+  border-bottom: 1px solid var(--color-stroke-decorative);
+}
+
+.comparison-table-header {
+  position: sticky;
+  top: 0;
+  background: var(--color-background-container);
+  z-index: 1;
+  border-bottom: 2px solid var(--color-stroke-informative);
+}
+
+.comparison-table-cell {
+  padding: var(--spacing-m) var(--spacing-l);
+  font-size: var(--body-font-size-s);
+  color: var(--color-foreground-medium);
+}
+
+.comparison-table-header .comparison-table-cell {
+  text-align: center;
+  padding: var(--spacing-l);
+}
+
+.comparison-table-header .comparison-table-cell h3,
+.comparison-table-header .comparison-table-cell h4 {
+  font-size: var(--heading-font-size-xs);
+  font-weight: 500;
+  margin: var(--spacing-s) 0;
+}
+
+.comparison-table-header .comparison-table-cell p {
+  font-size: var(--body-font-size-xs);
+  color: var(--color-foreground-light);
+  margin: 0;
+}
+
+.comparison-table-product-img {
+  max-height: 160px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+.comparison-table-cell a {
+  display: inline-block;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  background: var(--color-brand);
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: var(--body-font-size-s);
+  font-weight: var(--button-font-weight);
+  min-width: var(--button-min-width);
+  text-align: center;
+  transition: var(--button-transition);
+  margin-top: var(--spacing-s);
+}
+
+.comparison-table-cell a:hover {
+  background: var(--color-electric-blue-8);
+}
+
+.comparison-table-row:not(.comparison-table-header)
+  .comparison-table-cell:first-child {
+  font-weight: 500;
+  color: var(--color-foreground-default);
+}
+
+@media (width >= 900px) {
+  .comparison-table-grid {
+    min-width: auto;
+  }
+}
