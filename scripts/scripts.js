@@ -1,6 +1,6 @@
 import { loadArea, setConfig } from './ak.js';
 
-const hostnames = ['hp.com', 'www.hp.com'];
+const hostnames = ['www.hp.com'];
 
 const locales = {
   '/us-en': { lang: 'en' },
