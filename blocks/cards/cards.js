@@ -12,66 +12,97 @@ export default function init(block) {
         div.className = 'cards-card-body';
       }
     });
-    // Only add if the li has meaningful content (not just empty divs)
     if (li.textContent.trim().length > 0 || li.querySelector('img')) {
       ul.append(li);
     }
   });
 
-  // Sibling card items: check for h3 elements in adjacent
-  // default-content that belong to this cards section
+  // Sibling card items: flat content in adjacent default-content
   const section = block.closest('.section');
   if (section) {
     const dc = section.querySelector('.default-content');
     if (dc) {
-      const h3s = dc.querySelectorAll('h3');
-      if (h3s.length > 1) {
-        // Group siblings by h3: each card = preceding img + h3 + following p/a
-        h3s.forEach((h3) => {
-          const li = document.createElement('li');
-
-          // Image: look backward for preceding <p> with <img>
-          let imgWrap = null;
-          let prev = h3.previousElementSibling;
-          while (prev) {
-            if (prev.tagName === 'H3') break;
-            if (prev.querySelector('picture, img')) {
-              imgWrap = document.createElement('div');
-              imgWrap.className = 'cards-card-image';
-              const pic = prev.querySelector('picture')
-                || prev.querySelector('img');
-              if (pic) imgWrap.append(pic);
-              prev.remove();
-              break;
-            }
-            prev = prev.previousElementSibling;
-          }
-
-          // Body: h3 + following content until next h3 or img
-          const body = document.createElement('div');
-          body.className = 'cards-card-body';
-          body.append(h3);
-
-          // h3 was moved into body, scan remaining dc children
-          let sib = dc.children[0];
-          const toMove = [];
-          while (sib) {
-            const nextSib = sib.nextElementSibling;
-            if (sib.tagName === 'H3') break;
-            if (sib.querySelector('picture, img')) break;
-            toMove.push(sib);
-            sib = nextSib;
-          }
-          toMove.forEach((el) => body.append(el));
-
-          if (imgWrap) li.append(imgWrap);
-          li.append(body);
-          ul.append(li);
-        });
-      }
+      const items = collectCardItems(dc);
+      items.forEach((item) => {
+        const li = document.createElement('li');
+        if (item.image) {
+          const imgDiv = document.createElement('div');
+          imgDiv.className = 'cards-card-image';
+          imgDiv.append(item.image);
+          li.append(imgDiv);
+        }
+        const bodyDiv = document.createElement('div');
+        bodyDiv.className = 'cards-card-body';
+        item.content.forEach((el) => bodyDiv.append(el));
+        li.append(bodyDiv);
+        ul.append(li);
+      });
     }
   }
 
   block.textContent = '';
   block.append(ul);
+}
+
+/**
+ * Scan default-content children and group them into card items.
+ * Pattern: [img-paragraph] h3 [p...] [a-paragraph] repeated.
+ * Each h3 starts a new card. Preceding image belongs to that card.
+ */
+function collectCardItems(dc) {
+  const items = [];
+  const children = [...dc.children];
+  let i = 0;
+
+  while (i < children.length) {
+    const el = children[i];
+
+    // Skip h2 headings (section titles, not card content)
+    if (el.tagName === 'H2') {
+      i += 1;
+      continue;
+    }
+
+    // Look for h3 — this starts a card
+    if (el.tagName === 'H3') {
+      const card = { image: null, content: [] };
+
+      // Check if preceding element was an image (belongs to this card)
+      if (i > 0) {
+        const prev = children[i - 1];
+        const img = prev.querySelector('picture') || prev.querySelector('img');
+        if (img && (prev.tagName === 'P' || prev.tagName === 'DIV')) {
+          card.image = img;
+          prev.remove();
+        }
+      }
+
+      // Add the h3 itself
+      card.content.push(el);
+      i += 1;
+
+      // Collect following content until next h3 or image-paragraph
+      while (i < children.length) {
+        const next = children[i];
+        if (next.tagName === 'H3' || next.tagName === 'H2') break;
+        if (next.querySelector('picture, img') && next.tagName === 'P') break;
+        card.content.push(next);
+        i += 1;
+      }
+
+      items.push(card);
+    } else {
+      // Skip non-card content (stray images before first h3, etc.)
+      i += 1;
+    }
+  }
+
+  // Remove collected elements from dc
+  items.forEach((item) => {
+    item.content.forEach((el) => {
+      if (el.parentNode === dc) el.remove();
+    });
+  });
+
+  return items;
 }
