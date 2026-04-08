@@ -299,6 +299,28 @@ var CustomImportScript = (() => {
         "iframe",
         "link"
       ]);
+      const skipLists = element.querySelectorAll("ul");
+      skipLists.forEach((ul) => {
+        const links = ul.querySelectorAll('a[href="#body"], a[href="#footer"], a[href="#countryselector"]');
+        if (links.length > 0) ul.remove();
+      });
+      element.querySelectorAll("a").forEach((a) => {
+        const text = a.textContent.trim().toLowerCase();
+        if (text === "related links" || a.href.includes("void(0)")) {
+          const p = a.closest("p") || a;
+          p.remove();
+        }
+      });
+      element.querySelectorAll("p").forEach((p) => {
+        const text = p.textContent.trim();
+        if (text.includes("Show Next Slide") || text.includes("Show Previous Slide") || text.includes("Go to slide") || text.includes("Close Clear Play")) {
+          p.remove();
+        }
+      });
+      WebImporter.DOMUtils.remove(element, [
+        ".c-hp-modal",
+        '[class*="modal"]'
+      ]);
       element.querySelectorAll("*").forEach((el) => {
         el.removeAttribute("data-track");
         el.removeAttribute("data-analytics");

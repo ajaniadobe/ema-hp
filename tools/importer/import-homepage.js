@@ -6,6 +6,8 @@ import carouselParser from './parsers/carousel.js';
 import cardsParser from './parsers/cards.js';
 import heroParser from './parsers/hero.js';
 import columnsParser from './parsers/columns.js';
+import iconGridParser from './parsers/icon-grid.js';
+import productCardParser from './parsers/product-card.js';
 
 // TRANSFORMER IMPORTS
 import hpCleanupTransformer from './transformers/hp-cleanup.js';
@@ -18,6 +20,8 @@ const parsers = {
   'cards': cardsParser,
   'hero': heroParser,
   'columns': columnsParser,
+  'icon-grid': iconGridParser,
+  'product-card': productCardParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION
@@ -35,10 +39,20 @@ const PAGE_TEMPLATE = {
       ],
     },
     {
-      name: 'cards',
+      name: 'icon-grid',
       instances: [
         '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2) .c-hp-bg-container',
+      ],
+    },
+    {
+      name: 'product-card',
+      instances: [
         '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .c-hp-bg-container',
+      ],
+    },
+    {
+      name: 'cards',
+      instances: [
         '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9) .c-hp-grid',
         '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-hp-grid',
         '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(13) .c-hp-bg-container',
@@ -72,7 +86,7 @@ const PAGE_TEMPLATE = {
       name: 'Our Products',
       selector: '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2)',
       style: null,
-      blocks: ['cards'],
+      blocks: ['icon-grid'],
       defaultContent: ['h2'],
     },
     {
@@ -80,7 +94,7 @@ const PAGE_TEMPLATE = {
       name: 'Shop These Must Haves',
       selector: '.root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4)',
       style: null,
-      blocks: ['cards'],
+      blocks: ['product-card'],
       defaultContent: ['h2'],
     },
     {
@@ -196,8 +210,8 @@ export default {
       const parser = parsers[block.name];
       if (!parser) return;
       try {
-        // For cards: expand element to include sibling card items
-        if (block.name === 'cards') {
+        // Expand element to include sibling card items
+        if (['cards', 'icon-grid', 'product-card'].includes(block.name)) {
           const el = block.element;
           const parent = el.parentElement;
           if (parent) {

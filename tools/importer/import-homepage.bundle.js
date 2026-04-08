@@ -280,6 +280,116 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/icon-grid.js
+  function parse5(element, { document }) {
+    const cells = [];
+    const headings = Array.from(element.querySelectorAll("h3"));
+    headings.forEach((h3) => {
+      let img = null;
+      let link = null;
+      let prev = h3.previousElementSibling;
+      while (prev) {
+        if (prev.querySelector("img")) {
+          img = prev.querySelector("img");
+          break;
+        }
+        prev = prev.previousElementSibling;
+      }
+      let next = h3.nextElementSibling;
+      while (next) {
+        if (next.tagName === "H3" || next.querySelector("img")) break;
+        const a = next.querySelector("a[href]") || (next.tagName === "A" ? next : null);
+        if (a) {
+          link = a;
+          break;
+        }
+        next = next.nextElementSibling;
+      }
+      if (!link) {
+        const parentLink = h3.closest("a");
+        if (parentLink) link = parentLink;
+      }
+      if (!link && img) {
+        const imgLink = img.closest("a");
+        if (imgLink) link = imgLink;
+      }
+      const imgCell = img || document.createTextNode("");
+      const contentCell = [];
+      contentCell.push(h3);
+      if (link) contentCell.push(link);
+      cells.push([imgCell, contentCell]);
+    });
+    if (cells.length === 0) return;
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: "icon-grid",
+      cells
+    });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/product-card.js
+  function parse6(element, { document }) {
+    const cells = [];
+    const headings = Array.from(element.querySelectorAll("h3"));
+    headings.forEach((h3) => {
+      let img = null;
+      let desc = null;
+      let cta = null;
+      const specs = [];
+      let prev = h3.previousElementSibling;
+      while (prev) {
+        if (prev.tagName === "P" && prev.querySelector("img")) {
+          img = prev.querySelector("img");
+          break;
+        }
+        if (prev.tagName === "IMG") {
+          img = prev;
+          break;
+        }
+        prev = prev.previousElementSibling;
+      }
+      let next = h3.nextElementSibling;
+      while (next) {
+        if (next.tagName === "H3" || next.tagName === "P" && next.querySelector("img")) break;
+        if (next.tagName === "IMG") break;
+        if (next.tagName === "UL") {
+          next.querySelectorAll("li").forEach((li) => specs.push(li.textContent.trim()));
+        } else if (next.tagName === "P") {
+          const link = next.querySelector("a[href]");
+          if (link && next.children.length === 1) {
+            cta = link;
+          } else if (next.textContent.trim().length > 5) {
+            desc = next;
+          }
+        } else if (next.tagName === "A") {
+          cta = next;
+        }
+        next = next.nextElementSibling;
+      }
+      const imgCell = img || document.createTextNode("");
+      const contentCell = [];
+      contentCell.push(h3);
+      if (desc) contentCell.push(desc);
+      if (specs.length > 0) {
+        const ul = document.createElement("ul");
+        specs.forEach((s) => {
+          const li = document.createElement("li");
+          li.textContent = s;
+          ul.appendChild(li);
+        });
+        contentCell.push(ul);
+      }
+      if (cta) contentCell.push(cta);
+      cells.push([imgCell, contentCell]);
+    });
+    if (cells.length === 0) return;
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: "product-card",
+      cells
+    });
+    element.replaceWith(block);
+  }
+
   // tools/importer/transformers/hp-cleanup.js
   var H = { before: "beforeTransform", after: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -325,6 +435,28 @@ var CustomImportScript = (() => {
         '[class*="related-links"]',
         "iframe",
         "link"
+      ]);
+      const skipLists = element.querySelectorAll("ul");
+      skipLists.forEach((ul) => {
+        const links = ul.querySelectorAll('a[href="#body"], a[href="#footer"], a[href="#countryselector"]');
+        if (links.length > 0) ul.remove();
+      });
+      element.querySelectorAll("a").forEach((a) => {
+        const text = a.textContent.trim().toLowerCase();
+        if (text === "related links" || a.href.includes("void(0)")) {
+          const p = a.closest("p") || a;
+          p.remove();
+        }
+      });
+      element.querySelectorAll("p").forEach((p) => {
+        const text = p.textContent.trim();
+        if (text.includes("Show Next Slide") || text.includes("Show Previous Slide") || text.includes("Go to slide") || text.includes("Close Clear Play")) {
+          p.remove();
+        }
+      });
+      WebImporter.DOMUtils.remove(element, [
+        ".c-hp-modal",
+        '[class*="modal"]'
       ]);
       element.querySelectorAll("*").forEach((el) => {
         el.removeAttribute("data-track");
@@ -420,7 +552,9 @@ var CustomImportScript = (() => {
     "carousel": parse,
     "cards": parse2,
     "hero": parse3,
-    "columns": parse4
+    "columns": parse4,
+    "icon-grid": parse5,
+    "product-card": parse6
   };
   var PAGE_TEMPLATE = {
     name: "homepage",
@@ -436,10 +570,20 @@ var CustomImportScript = (() => {
         ]
       },
       {
+        name: "icon-grid",
+        instances: [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2) .c-hp-bg-container"
+        ]
+      },
+      {
+        name: "product-card",
+        instances: [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .c-hp-bg-container"
+        ]
+      },
+      {
         name: "cards",
         instances: [
-          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2) .c-hp-bg-container",
-          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .c-hp-bg-container",
           ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9) .c-hp-grid",
           ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-hp-grid",
           ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(13) .c-hp-bg-container"
@@ -473,7 +617,7 @@ var CustomImportScript = (() => {
         name: "Our Products",
         selector: ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2)",
         style: null,
-        blocks: ["cards"],
+        blocks: ["icon-grid"],
         defaultContent: ["h2"]
       },
       {
@@ -481,7 +625,7 @@ var CustomImportScript = (() => {
         name: "Shop These Must Haves",
         selector: ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4)",
         style: null,
-        blocks: ["cards"],
+        blocks: ["product-card"],
         defaultContent: ["h2"]
       },
       {
@@ -579,7 +723,7 @@ var CustomImportScript = (() => {
         const parser = parsers[block.name];
         if (!parser) return;
         try {
-          if (block.name === "cards") {
+          if (["cards", "icon-grid", "product-card"].includes(block.name)) {
             const el = block.element;
             const parent = el.parentElement;
             if (parent) {
