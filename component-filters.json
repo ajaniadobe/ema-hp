@@ -1,0 +1,40 @@
+{
+  "definitionGroups": [
+    {
+      "title": "Content",
+      "id": "content",
+      "components": [
+        {
+          "title": "Section",
+          "id": "section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {}
+              }
+            }
+          },
+          "filter": {
+            "allowedChildren": [
+              "hero",
+              "carousel",
+              "cards",
+              "columns",
+              "card",
+              "advanced-tabs",
+              "table",
+              "youtube",
+              "breadcrumb",
+              "anchor-nav",
+              "icon-grid",
+              "badge-row",
+              "promo-banner",
+              "accordion"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "url": "https://www.hp.com/us-en/laptops-and-2-in-1s.html",
+  "path": "us-en/laptops-and-2-in-1s",
+  "timestamp": "2026-04-08T07:43:30.409Z",
+  "title": "HP Laptop Computers and 2-in-1 PCs | HP® Official Site",
+  "template": "category-landing",
+  "blocks": [
+    "cards",
+    "cards",
+    "carousel",
+    "accordion"
+  ]
+}

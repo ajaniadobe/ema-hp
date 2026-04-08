@@ -1,0 +1,108 @@
+{
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": ["https://www.hp.com/us-en/home.html"],
+      "description": "HP homepage with hero carousel, product category tiles, featured products, editorial content cards, case studies, news articles, and support quick links",
+      "blocks": [
+        { "name": "carousel", "instances": [".root.responsivegrid > .aem-Grid > .genericCarousel"] },
+        { "name": "cards", "instances": [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2) .c-hp-bg-container",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .c-hp-bg-container",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9) .c-hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(13) .c-hp-bg-container"
+        ]},
+        { "name": "hero", "instances": [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6) .c-hp-bg-container",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(8) .c-hp-bg-container"
+        ]},
+        { "name": "columns", "instances": [".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7) .c-hp-grid"] }
+      ],
+      "sections": [
+        { "id": "section-hero", "name": "Hero Carousel", "selector": ".root.responsivegrid > .aem-Grid > .genericCarousel", "style": null, "blocks": ["carousel"], "defaultContent": [] },
+        { "id": "section-products", "name": "Our Products", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(2)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-must-haves", "name": "Shop These Must Haves", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-wri", "name": "Work Relationship Index", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6)", "style": null, "blocks": ["hero"], "defaultContent": [] },
+        { "id": "section-it-platform", "name": "IT Platform", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7)", "style": "shaded", "blocks": ["columns"], "defaultContent": [] },
+        { "id": "section-space", "name": "Space Article", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(8)", "style": null, "blocks": ["hero"], "defaultContent": [] },
+        { "id": "section-case-studies", "name": "Customer Case Studies", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-news", "name": "Latest from HP", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-support", "name": "Support Quick Links", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(13)", "style": "dark", "blocks": ["cards"], "defaultContent": ["h2"] }
+      ]
+    },
+    {
+      "name": "category-landing",
+      "urls": ["https://www.hp.com/us-en/laptops-and-2-in-1s.html"],
+      "description": "Category landing page with hero experience fragment, featured AI PCs, product carousel, use-case cards, comparison grid, and FAQ",
+      "blocks": [
+        { "name": "hero", "instances": [".root.responsivegrid > .aem-Grid > .experiencefragment:first-of-type"] },
+        { "name": "cards", "instances": [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6) .c-bg-container",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9) .c-hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-compare-feature"
+        ]},
+        { "name": "carousel", "instances": [".root.responsivegrid > .aem-Grid > .genericcarousel"] },
+        { "name": "accordion", "instances": [".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(12)"] }
+      ],
+      "sections": [
+        { "id": "section-hero", "name": "Hero", "selector": ".root.responsivegrid > .aem-Grid > .experiencefragment:first-of-type", "style": null, "blocks": ["hero"], "defaultContent": [] },
+        { "id": "section-featured", "name": "Featured AI PCs", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-carousel", "name": "Product Carousel", "selector": ".root.responsivegrid > .aem-Grid > .genericcarousel", "style": null, "blocks": ["carousel"], "defaultContent": [] },
+        { "id": "section-use-cases", "name": "Choose Your Laptop", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-compare", "name": "Explore All Laptops", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-faq", "name": "FAQ", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(12)", "style": null, "blocks": ["accordion"], "defaultContent": ["h2"] }
+      ]
+    },
+    {
+      "name": "product-marketing",
+      "urls": ["https://www.hp.com/us-en/printers/smart-tank.html"],
+      "description": "Product marketing page with video hero, sticky anchor nav, benefits section, comparison grid, feature carousel, sustainability content, support links, and FAQ accordion",
+      "blocks": [
+        { "name": "hero", "instances": [".root.responsivegrid > .aem-Grid > .heroBanner"] },
+        { "name": "cards", "instances": [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .c-hp-bg-container",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6) .c-hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7) .c-hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-hp-grid"
+        ]},
+        { "name": "columns", "instances": [".root.responsivegrid > .aem-Grid > .mediaContent"] },
+        { "name": "accordion", "instances": [".root.responsivegrid > .aem-Grid > .collapsibleSection"] }
+      ],
+      "sections": [
+        { "id": "section-hero", "name": "Hero Banner", "selector": ".root.responsivegrid > .aem-Grid > .heroBanner", "style": null, "blocks": ["hero"], "defaultContent": [] },
+        { "id": "section-benefits", "name": "Benefits", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-compare", "name": "Compare Printers", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(6)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-more-printers", "name": "More Printers", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-sustainability", "name": "Sustainability", "selector": ".root.responsivegrid > .aem-Grid > .mediaContent", "style": null, "blocks": ["columns"], "defaultContent": ["h2"] },
+        { "id": "section-support", "name": "Support", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-faq", "name": "FAQ", "selector": ".root.responsivegrid > .aem-Grid > .collapsibleSection:first-of-type", "style": null, "blocks": ["accordion"], "defaultContent": ["h2"] }
+      ]
+    },
+    {
+      "name": "content-editorial",
+      "urls": ["https://www.hp.com/us-en/sustainable-impact.html"],
+      "description": "Content/editorial page with hero fragment, info banner, content grids, recognition awards, timeline, product recommendations, and modals",
+      "blocks": [
+        { "name": "hero", "instances": [".root.responsivegrid > .aem-Grid > .experiencefragment:first-of-type"] },
+        { "name": "cards", "instances": [
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(3) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(5) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(8) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9) .hp-grid",
+          ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11) .c-horizontal-scroll"
+        ]}
+      ],
+      "sections": [
+        { "id": "section-hero", "name": "Hero", "selector": ".root.responsivegrid > .aem-Grid > .experiencefragment:first-of-type", "style": null, "blocks": ["hero"], "defaultContent": [] },
+        { "id": "section-report", "name": "Read the Report", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(3)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-pillars", "name": "Sustainability Pillars", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(4)", "style": null, "blocks": ["cards"], "defaultContent": [] },
+        { "id": "section-recognition", "name": "Recognition", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(7)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-history", "name": "History", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(9)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] },
+        { "id": "section-products", "name": "Sustainable Products", "selector": ".root.responsivegrid > .aem-Grid > .aem-GridColumn:nth-child(11)", "style": null, "blocks": ["cards"], "defaultContent": ["h2"] }
+      ]
+    }
+  ]
+}

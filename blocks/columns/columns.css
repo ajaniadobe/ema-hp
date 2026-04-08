@@ -1,11 +1,12 @@
 .columns {
-  --columns-gap: 0;
+  --columns-gap: var(--spacing-l);
 
   display: grid;
   gap: var(--columns-gap);
 
   img {
     display: block;
+    border-radius: var(--button-border-radius);
   }
 
   .row {
@@ -21,6 +22,22 @@
 
     :last-child {
       margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: var(--heading-font-size-l);
+      font-weight: var(--heading-font-weight);
+    }
+
+    h3 {
+      font-size: var(--body-font-size-l);
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--color-foreground-medium);
+    }
+
+    .btn {
+      margin-top: var(--spacing-m);
     }
   }
 
@@ -81,8 +98,14 @@
 
 @media (width >= 900px) {
   .columns {
+    --columns-gap: var(--spacing-xxl);
+
     .row {
       grid-template-columns: repeat(var(--child-count), 1fr);
+    }
+
+    .col h2 {
+      font-size: var(--heading-font-size-xl);
     }
 
     &.image-cover {

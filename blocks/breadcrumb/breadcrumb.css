@@ -1,0 +1,47 @@
+.breadcrumb {
+  font-size: var(--body-font-size-xs);
+  color: var(--color-foreground-light);
+  padding: var(--spacing-s) 0;
+}
+
+.breadcrumb nav {
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.breadcrumb li {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.breadcrumb li.breadcrumb-has-separator::after {
+  content: '/';
+  color: var(--color-gray-5);
+}
+
+.breadcrumb a {
+  color: var(--color-foreground-light);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-foreground-default);
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--color-foreground-default);
+  font-weight: 500;
+}

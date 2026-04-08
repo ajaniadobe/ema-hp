@@ -1,57 +1,8 @@
+/* fallback font — size-adjusted to match DM Sans metrics */
 @font-face {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/styles/fonts/montserrat.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF,
-    U+0131,
-    U+0152-0153,
-    U+02BB-02BC,
-    U+02C6,
-    U+02DA,
-    U+02DC,
-    U+0304,
-    U+0308,
-    U+0329,
-    U+2000-206F,
-    U+20AC,
-    U+2122,
-    U+2191,
-    U+2193,
-    U+2212,
-    U+2215,
-    U+FEFF,
-    U+FFFD;
-}
-
-@font-face {
-  font-family: Montserrat;
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/styles/fonts/montserrat-italic.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF,
-    U+0131,
-    U+0152-0153,
-    U+02BB-02BC,
-    U+02C6,
-    U+02DA,
-    U+02DC,
-    U+0304,
-    U+0308,
-    U+0329,
-    U+2000-206F,
-    U+20AC,
-    U+2122,
-    U+2191,
-    U+2193,
-    U+2212,
-    U+2215,
-    U+FEFF,
-    U+FFFD;
+  font-family: dm-sans-fallback;
+  size-adjust: 105%;
+  src: local('Arial');
 }
 
 :root {
@@ -60,123 +11,122 @@
   --grid-column-width: calc(var(--grid-container-width) / 12);
   --grid-gutter-width: 8.3%;
 
-  /* spacing */
+  /* spacing — HP uses 16px base (--hpi-default-padding) */
   --spacing-xxl: 48px;
   --spacing-xl: 32px;
   --spacing-l: 24px;
-  --spacing-m: 12px;
+  --spacing-m: 16px;
   --spacing-s: 8px;
   --spacing-xs: 4px;
 
   /* color schemes */
   color-scheme: light dark;
 
-  /* color tokens */
-  --color-gray-100: #f1f1f1;
-  --color-gray-200: #d3d3d3;
-  --color-gray-300: #b5b5b5;
-  --color-gray-400: #999;
-  --color-gray-500: #7d7d7d;
-  --color-gray-600: #636363;
-  --color-gray-700: #494949;
-  --color-gray-800: #313131;
-  --color-gray-900: #1b1b1b;
-  --color-green-100: #e1f5e3;
-  --color-green-200: #a3e1a8;
-  --color-green-300: #60cb6a;
-  --color-green-400: #24b032;
-  --color-green-500: #1e9029;
-  --color-green-600: #187220;
-  --color-green-700: #115418;
-  --color-green-800: #0c3910;
-  --color-green-900: #072009;
-  --color-teal-100: #e4f3f5;
-  --color-teal-200: #acdbdf;
-  --color-teal-300: #71c1c9;
-  --color-teal-400: #36a7b3;
-  --color-teal-500: #108a96;
-  --color-teal-600: #0d6d77;
-  --color-teal-700: #0a5158;
-  --color-teal-800: #06363b;
-  --color-teal-900: #041e21;
-  --color-blue-100: #eaf2ff;
-  --color-blue-200: #b9d4ff;
-  --color-blue-300: #88b6ff;
-  --color-blue-400: #5898ff;
-  --color-blue-500: #2176ff;
-  --color-blue-600: #0058e4;
-  --color-blue-700: #0041a9;
-  --color-blue-800: #002c74;
-  --color-blue-900: #001942;
-  --color-purple-100: #f4edfb;
-  --color-purple-200: #dfcbf2;
-  --color-purple-300: #c9a7ea;
-  --color-purple-400: #b385e1;
-  --color-purple-500: #9d60d8;
-  --color-purple-600: #843ccb;
-  --color-purple-700: #622c98;
-  --color-purple-800: #421e66;
-  --color-purple-900: #251139;
-  --color-magenta-100: #ffebf9;
-  --color-magenta-200: #ffc0ec;
-  --color-magenta-300: #ff8fde;
-  --color-magenta-400: #ff53cc;
-  --color-magenta-500: #eb00a5;
-  --color-magenta-600: #bd0084;
-  --color-magenta-700: #8e0064;
-  --color-magenta-800: #630045;
-  --color-magenta-900: #3b002a;
-  --color-red-100: #ffecea;
-  --color-red-200: #ffc4be;
-  --color-red-300: #ff9990;
-  --color-red-400: #ff6759;
-  --color-red-500: #f81400;
-  --color-red-600: #c71000;
-  --color-red-700: #950c00;
-  --color-red-800: #670800;
-  --color-red-900: #3c0500;
-  --color-orange-100: #ffeddc;
-  --color-orange-200: #ffc895;
-  --color-orange-300: #ff9e43;
-  --color-orange-400: #f37500;
-  --color-orange-500: #c76000;
-  --color-orange-600: #9e4c00;
-  --color-orange-700: #753800;
-  --color-orange-800: #4f2600;
-  --color-orange-900: #2d1500;
-  --color-yellow-100: #fff48e;
-  --color-yellow-200: #ebd400;
-  --color-yellow-300: #cab600;
-  --color-yellow-400: #ab9a00;
-  --color-yellow-500: #8c7e00;
-  --color-yellow-600: #6e6400;
-  --color-yellow-700: #514a00;
-  --color-yellow-800: #373100;
-  --color-yellow-900: #1e1b00;
+  /* HP Electric Blue palette */
+  --color-electric-blue-0: #e4eefa;
+  --color-electric-blue-1: #c9e0fc;
+  --color-electric-blue-2: #b2d2ff;
+  --color-electric-blue-3: #8fbaff;
+  --color-electric-blue-4: #72a3ff;
+  --color-electric-blue-5: #518cff;
+  --color-electric-blue-6: #296ef9;
+  --color-electric-blue-7: #024ad8;
+  --color-electric-blue-8: #103fb2;
+  --color-electric-blue-9: #0e3191;
+  --color-electric-blue-10: #0c2877;
+  --color-electric-blue-11: #0a2162;
+  --color-electric-blue-12: #0a1d4e;
 
-  /* named colors */
+  /* HP Power Storm (teal/secondary) palette */
+  --color-power-storm-0: #dbeff7;
+  --color-power-storm-1: #bce2f0;
+  --color-power-storm-2: #a4d3e5;
+  --color-power-storm-3: #8ebdce;
+  --color-power-storm-4: #7fadbe;
+  --color-power-storm-5: #6d9aab;
+  --color-power-storm-6: #568393;
+  --color-power-storm-7: #447180;
+  --color-power-storm-8: #356373;
+  --color-power-storm-9: #235262;
+  --color-power-storm-10: #0e4353;
+  --color-power-storm-11: #003342;
+  --color-power-storm-12: #002935;
+
+  /* HP Orange Bloom (accent/error) palette */
+  --color-orange-bloom-0: #fbe5e4;
+  --color-orange-bloom-1: #f9d4d2;
+  --color-orange-bloom-2: #ffb4b2;
+  --color-orange-bloom-3: #fc9292;
+  --color-orange-bloom-4: #fd7370;
+  --color-orange-bloom-5: #ff5050;
+  --color-orange-bloom-6: #e54041;
+  --color-orange-bloom-7: #cc2d32;
+  --color-orange-bloom-8: #b3262b;
+  --color-orange-bloom-9: #941f22;
+  --color-orange-bloom-10: #79191b;
+  --color-orange-bloom-11: #5a1313;
+  --color-orange-bloom-12: #4b0b0c;
+
+  /* HP Gray palette (13-step) */
+  --color-gray-0: #fafafa;
+  --color-gray-1: #f5f5f5;
+  --color-gray-2: #f0f0f0;
+  --color-gray-3: #e8e8e8;
+  --color-gray-4: #c2c2c2;
+  --color-gray-5: #a3a3a3;
+  --color-gray-6: #858585;
+  --color-gray-7: #636363;
+  --color-gray-8: #525252;
+  --color-gray-9: #3d3d3d;
+  --color-gray-10: #292929;
+  --color-gray-11: #212121;
+  --color-gray-12: #1a1a1a;
+
+  /* named colors — mapped to HP brand */
   --color-light-base: 255 255 255;
   --color-dark-base: 0 0 0;
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-dark), var(--color-light));
-  --color-link: light-dark(var(--color-gray-900), var(--color-gray-100));
-  --color-brand: var(--color-purple-500);
-  --color-accent: light-dark(var(--color-magenta-600), var(--color-magenta-500));
+  --color-white: #fff;
+  --color-black: #000;
+  --color-text: light-dark(var(--color-gray-12), var(--color-light));
+  --color-link: light-dark(var(--color-gray-9), var(--color-gray-1));
+  --color-brand: var(--color-electric-blue-7);
+  --color-accent: light-dark(var(--color-electric-blue-7), var(--color-electric-blue-5));
   --color-background: light-dark(var(--color-light), var(--color-dark));
-  --color-shaded: light-dark(#f9f9f9, #111);
+  --color-shaded: light-dark(var(--color-gray-1), var(--color-gray-11));
 
-  /* fonts */
-  --font-family: montserrat, "Trebuchet MS", sans-serif;
+  /* semantic mode colors (from HP design system) */
+  --color-foreground-default: var(--color-gray-12);
+  --color-foreground-medium: var(--color-gray-9);
+  --color-foreground-light: var(--color-gray-7);
+  --color-foreground-disabled: var(--color-gray-5);
+  --color-background-default: var(--color-gray-1);
+  --color-background-medium: var(--color-gray-2);
+  --color-background-container: var(--color-white);
+  --color-stroke-decorative: var(--color-gray-3);
+  --color-stroke-informative: var(--color-gray-6);
+  --color-focus: var(--color-electric-blue-9);
 
-  /* headings */
-  --heading-font-size-xxl: 32.44px;
-  --heading-font-size-xl: 28.83px;
-  --heading-font-size-l: 25.63px;
-  --heading-font-size-m: 22.78px;
-  --heading-font-size-s: 20.25px;
+  /* effects */
+  --effect-glasswall: rgb(26 26 26 / 50%);
+  --effect-drop-shadow: rgb(26 26 26 / 20%);
+  --effect-highlight-default: rgb(81 140 255 / 10%);
+  --effect-highlight-hover: rgb(114 163 255 / 30%);
+  --effect-highlight-active: rgb(143 186 255 / 60%);
+
+  /* fonts — DM Sans as substitute for Forma DJR Micro */
+  --font-family: "DM Sans", dm-sans-fallback, arial, sans-serif;
+
+  /* headings — HP uses 44px h2, 20px h3 at desktop */
+  --heading-font-size-xxl: 44px;
+  --heading-font-size-xl: 36px;
+  --heading-font-size-l: 28px;
+  --heading-font-size-m: 24px;
+  --heading-font-size-s: 20px;
   --heading-font-size-xs: 18px;
-  --heading-line-height: 1.15;
+  --heading-line-height: 1;
+  --heading-font-weight: 400;
 
   /* body */
   --body-font-size-xxxl: 25px;
@@ -186,7 +136,31 @@
   --body-font-size-m: 16px;
   --body-font-size-s: 14px;
   --body-font-size-xs: 12px;
-  --body-line-height: 1.6;
+  --body-line-height: 1.5;
+
+  /* buttons */
+  --button-border-radius: 8px;
+  --button-padding: 6px 12px;
+  --button-padding-large: 10px 20px;
+  --button-min-width: 112px;
+  --button-font-size: 16px;
+  --button-font-weight: 400;
+  --button-line-height: 20px;
+  --button-transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+
+  /* shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 6px rgb(0 0 0 / 10%);
+  --shadow-lg: 0 10px 15px rgb(0 0 0 / 10%);
+
+  /* transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* focus */
+  --focus-outline: 3px solid var(--color-electric-blue-1);
+  --focus-outline-offset: 2px;
 
   /* misc */
   --header-height: 64px;
@@ -209,13 +183,12 @@ body {
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: Arial, sans-serif;
   font-size: var(--body-font-size-m);
   line-height: var(--body-line-height);
   padding: var(--header-height) 0 0;
 
   &.session {
-    /* only allow font loading if a session */
     font-family: var(--font-family);
   }
 
@@ -236,62 +209,125 @@ header {
   position: fixed;
 }
 
+/* links */
 a {
   color: var(--color-link);
+  text-decoration: none;
+  transition: color var(--transition-base);
 
+  &:hover {
+    text-decoration: underline;
+  }
+
+  /* button base */
   &.btn {
     display: inline-block;
-    line-height: 1;
-    font-weight: 500;
+    line-height: var(--button-line-height);
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
     text-decoration: none;
     border: 2px solid;
-    padding: 8px 12px;
+    border-radius: var(--button-border-radius);
+    padding: var(--button-padding);
+    min-width: var(--button-min-width);
+    text-align: center;
     box-sizing: border-box;
+    transition: var(--button-transition);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
 
     &.btn-outline {
       background: transparent;
     }
   }
 
+  /* primary button — HP dark fill */
   &.btn-accent {
-    color: #fff;
-    background: var(--color-accent);
-    border: 2px solid var(--color-accent);
+    color: var(--color-white);
+    background: var(--color-brand);
+    border-color: var(--color-brand);
 
-    &.btn-outline {
-      color: var(--color-accent);
+    &:hover {
+      background: var(--color-electric-blue-8);
+      border-color: var(--color-electric-blue-8);
     }
-  }
-
-  &.btn-primary {
-    color: var(--color-background);
-    background-color: var(--color-text);
 
     &.btn-outline {
-      color: var(--color-text);
+      color: var(--color-brand);
       background: transparent;
+
+      &:hover {
+        background: var(--color-electric-blue-0);
+      }
     }
   }
 
+  /* primary dark button */
+  &.btn-primary {
+    color: var(--color-white);
+    background-color: var(--color-gray-12);
+    border-color: var(--color-gray-12);
+
+    &:hover {
+      background-color: var(--color-gray-9);
+      border-color: var(--color-gray-9);
+    }
+
+    &.btn-outline {
+      color: var(--color-gray-12);
+      background: transparent;
+
+      &:hover {
+        background: var(--color-gray-0);
+      }
+    }
+  }
+
+  /* secondary button — outline */
   &.btn-secondary {
-    color: var(--color-background);
-    background-color: var(--color-gray-500);
-    border: 2px solid var(--color-gray-500);
+    color: var(--color-gray-12);
+    background-color: transparent;
+    border: 1px solid var(--color-gray-12);
+
+    &:hover {
+      background-color: var(--color-gray-1);
+    }
 
     &.btn-outline {
-      color: var(--color-gray-500);
+      color: var(--color-gray-12);
     }
   }
 
+  /* negative / error button */
   &.btn-negative {
-    color: #fff;
-    background-color: var(--color-red-600);
-    border: 2px solid var(--color-red-600);
+    color: var(--color-white);
+    background-color: var(--color-orange-bloom-5);
+    border-color: var(--color-orange-bloom-5);
+
+    &:hover {
+      background-color: var(--color-orange-bloom-7);
+      border-color: var(--color-orange-bloom-7);
+    }
 
     &.btn-outline {
-      color: var(--color-red-600);
+      color: var(--color-orange-bloom-5);
+      background: transparent;
+
+      &:hover {
+        background: var(--color-orange-bloom-0);
+      }
     }
   }
+}
+
+/* focus visible for all interactive elements */
+a:focus-visible,
+button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* sections */
@@ -304,12 +340,63 @@ a {
   }
 }
 
+/* section variants */
+main .section.dark {
+  background-color: var(--color-gray-12);
+  color: var(--color-white);
+
+  a {
+    color: var(--color-white);
+  }
+
+  a.btn-primary {
+    color: var(--color-gray-12);
+    background-color: var(--color-white);
+    border-color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-gray-2);
+      border-color: var(--color-gray-2);
+    }
+  }
+
+  a.btn-secondary {
+    color: var(--color-white);
+    border-color: var(--color-white);
+
+    &:hover {
+      background-color: rgb(255 255 255 / 10%);
+    }
+  }
+}
+
+main .section.shaded {
+  background-color: var(--color-gray-1);
+}
+
+main .section.brand {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+
+  a {
+    color: var(--color-white);
+  }
+}
+
+main .section.teal {
+  background-color: var(--color-power-storm-11);
+  color: var(--color-white);
+
+  a {
+    color: var(--color-white);
+  }
+}
+
 main {
   ul,
   ol {
     padding-inline-start: 24px;
 
-    /* Reduce nested lists even further */
     ul,
     ol {
       padding-inline-start: 12px;
@@ -322,7 +409,7 @@ button {
 }
 
 li {
-  margin-block: 1em;
+  margin-block: 0.75em;
 }
 
 h1,
@@ -331,8 +418,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
+  font-weight: var(--heading-font-weight);
   line-height: var(--heading-line-height);
+  margin-top: 0;
 }
 
 h1 { font-size: var(--heading-font-size-xxl); }
@@ -363,11 +451,28 @@ svg {
   height: 20px;
 }
 
-/* @media (width >= 600px) {} */
+hr {
+  border: none;
+  border-top: 1px solid var(--color-stroke-decorative);
+  margin: var(--spacing-xl) 0;
+}
 
-/* @media (width >= 900px) {} */
+/* responsive breakpoints */
+@media (width >= 600px) {
+  :root {
+    --heading-font-size-xxl: 44px;
+    --heading-font-size-xl: 36px;
+    --heading-font-size-l: 28px;
+  }
+}
 
-/* @media (width >= 1200px) {} */
+@media (width >= 900px) {
+  :root {
+    --heading-font-size-xxl: 52px;
+    --heading-font-size-xl: 44px;
+    --heading-font-size-l: 32px;
+  }
+}
 
 @media (width >= 1440px) {
   :root {

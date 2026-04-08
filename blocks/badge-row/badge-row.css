@@ -1,0 +1,29 @@
+.badge-row-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-m);
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+.badge-row-badge {
+  display: flex;
+  align-items: center;
+}
+
+.badge-row-badge img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.badge-row-link {
+  display: flex;
+}
+
+@media (width >= 600px) {
+  .badge-row-badge img {
+    height: 40px;
+  }
+}
