@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "url": "https://www.hp.com/us-en/solutions/learning-hub/kinepolis-case-study.html",
+  "path": "us-en/solutions/learning-hub/kinepolis-case-study",
+  "timestamp": "2026-04-08T16:32:44.670Z",
+  "title": "Cinema IT Management & POS Devices Case Study with Kinepolis | HP® Official Site",
+  "template": "content-editorial",
+  "blocks": [
+    "hero",
+    "cards",
+    "cards",
+    "cards",
+    "cards",
+    "cards"
+  ]
+}

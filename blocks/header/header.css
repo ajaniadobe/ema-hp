@@ -236,10 +236,11 @@ header {
   }
 
   &.is-mobile-open {
-    height: initial;
-    max-height: initial;
-    overflow: initial;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto;
     bottom: 0;
+    background-color: var(--color-white);
 
     .header-content {
       height: 100%;
@@ -247,6 +248,29 @@ header {
 
     .brand-section {
       border-bottom: 1px solid var(--color-stroke-decorative);
+    }
+
+    .main-nav-section {
+      .main-nav-link {
+        font-size: var(--body-font-size-m);
+        padding-left: var(--spacing-m);
+      }
+
+      .menu li,
+      .mega-menu li {
+        padding-left: var(--spacing-m);
+      }
+
+      .menu a,
+      .mega-menu a {
+        font-size: var(--body-font-size-s);
+        color: var(--color-foreground-medium);
+      }
+    }
+
+    .actions-section {
+      border-top: 1px solid var(--color-stroke-decorative);
+      padding: var(--spacing-m);
     }
   }
 }

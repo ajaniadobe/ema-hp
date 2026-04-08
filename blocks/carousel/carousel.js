@@ -75,6 +75,18 @@ function createSlide(row, slideIndex, carouselId) {
     slide.append(column);
   });
 
+  // Deduplicate CTAs by href within each slide
+  const seenHrefs = new Set();
+  slide.querySelectorAll('a[href]').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (seenHrefs.has(href)) {
+      const wrapper = a.closest('p') || a;
+      wrapper.remove();
+    } else {
+      seenHrefs.add(href);
+    }
+  });
+
   const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
   if (labeledBy) {
     slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
