@@ -1,0 +1,21 @@
+{
+  "total": 12,
+  "offset": 0,
+  "limit": 12,
+  "data": [
+    { "name": "Hero", "path": "/docs/library/blocks/hero" },
+    { "name": "Carousel", "path": "/docs/library/blocks/carousel" },
+    { "name": "Cards", "path": "/docs/library/blocks/cards" },
+    { "name": "Columns", "path": "/docs/library/blocks/columns" },
+    { "name": "Accordion", "path": "/docs/library/blocks/accordion" },
+    { "name": "Product Card", "path": "/docs/library/blocks/product-card" },
+    { "name": "Icon Grid", "path": "/docs/library/blocks/icon-grid" },
+    { "name": "Badge Row", "path": "/docs/library/blocks/badge-row" },
+    { "name": "Promo Banner", "path": "/docs/library/blocks/promo-banner" },
+    { "name": "Breadcrumb", "path": "/docs/library/blocks/breadcrumb" },
+    { "name": "Anchor Nav", "path": "/docs/library/blocks/anchor-nav" },
+    { "name": "Buttons", "path": "/docs/library/blocks/buttons" }
+  ],
+  "columns": ["name", "path"],
+  ":type": "sheet"
+}
