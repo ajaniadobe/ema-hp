@@ -43,36 +43,44 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/carousel.js
   function parse(element, { document }) {
     const cells = [];
-    const slides = element.querySelectorAll(
+    const allSlides = element.querySelectorAll(
       '[class*="slide"]:not([class*="clone"]):not([class*="duplicate"])'
     );
     const seen = /* @__PURE__ */ new Set();
-    const uniqueSlides = [];
-    slides.forEach((slide) => {
+    const slides = [];
+    allSlides.forEach((slide) => {
       const h2 = slide.querySelector("h2");
       if (!h2) return;
       const key = h2.textContent.trim();
       if (seen.has(key)) return;
       seen.add(key);
-      uniqueSlides.push(slide);
+      slides.push(slide);
     });
-    uniqueSlides.forEach((slide) => {
+    slides.forEach((slide) => {
       const imgs = Array.from(slide.querySelectorAll("img"));
-      const bgImg = imgs.reduce((best, img) => {
-        const w = img.naturalWidth || img.width || 0;
-        return w > ((best == null ? void 0 : best.naturalWidth) || (best == null ? void 0 : best.width) || 0) ? img : best;
-      }, imgs[0]);
+      const bgImg = imgs.find((img) => {
+        const w = parseInt(img.getAttribute("width"), 10) || 0;
+        return w > 400 || img.className.includes("bg") || img.closest('[class*="image"]');
+      }) || imgs[imgs.length - 1];
       const heading = slide.querySelector("h2");
       const subheading = slide.querySelector("h3");
-      const para = slide.querySelector("p:not(:empty)");
-      const ctas = Array.from(
-        slide.querySelectorAll('a[href]:not([href="#"])')
-      ).filter((a) => a.textContent.trim().length > 0);
-      const imgCell = bgImg ? bgImg : document.createTextNode("");
+      const desc = slide.querySelector("p:not(:empty)");
+      const seenHrefs = /* @__PURE__ */ new Set();
+      const ctas = [];
+      slide.querySelectorAll('a[href]:not([href="#"])').forEach((a) => {
+        if (a.textContent.trim().length === 0) return;
+        const href = a.getAttribute("href");
+        if (seenHrefs.has(href)) return;
+        seenHrefs.add(href);
+        ctas.push(a);
+      });
+      const imgCell = bgImg || document.createTextNode("");
       const contentCell = [];
       if (heading) contentCell.push(heading);
       if (subheading) contentCell.push(subheading);
-      if (para && para.textContent.trim()) contentCell.push(para);
+      if (desc && desc.textContent.trim().length > 5) {
+        contentCell.push(desc);
+      }
       contentCell.push(...ctas);
       if (contentCell.length > 0) {
         cells.push([imgCell, contentCell]);
@@ -89,63 +97,130 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/cards.js
   function parse2(element, { document }) {
     const cells = [];
-    const items = element.querySelectorAll(
-      ':scope > [class*="grid"] > [class*="column"], :scope > [class*="grid"] > [class*="item"], :scope [class*="card"], :scope [class*="tile"], :scope > [class*="container"] > div > div'
-    );
-    const cardItems = items.length > 0 ? items : element.querySelectorAll(":scope > div > div");
-    cardItems.forEach((item) => {
-      const heading = item.querySelector("h3, h2");
-      if (!heading) return;
-      const img = item.querySelector("img");
-      const paragraphs = Array.from(item.querySelectorAll("p"));
-      const datePara = paragraphs.find(
-        (p) => /^(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}/i.test(p.textContent.trim())
+    const parent = element.parentElement || element;
+    const allNodes = Array.from(parent.querySelectorAll(
+      ":scope h3, :scope img, :scope p, :scope a[href]"
+    ));
+    const headings = Array.from(parent.querySelectorAll("h3"));
+    if (headings.length === 0) {
+      const items = element.querySelectorAll(
+        ':scope > div, :scope > [class*="card"], :scope > [class*="tile"]'
       );
-      const descParas = paragraphs.filter(
-        (p) => p !== datePara && p.textContent.trim().length > 10 && !p.querySelector("img") && !p.querySelector("strong")
-      );
-      const cta = item.querySelector(
-        'a[class*="button"], a[class*="cta"], a[href]'
-      );
-      const imgCell = img || document.createTextNode("");
-      const contentCell = [];
-      if (datePara) contentCell.push(datePara);
-      if (heading) contentCell.push(heading);
-      descParas.forEach((p) => contentCell.push(p));
-      if (cta && cta !== heading.closest("a")) contentCell.push(cta);
-      if (contentCell.length > 0) {
-        cells.push([imgCell, contentCell]);
-      }
-    });
+      items.forEach((item) => {
+        const h = item.querySelector("h3, h2");
+        if (!h) return;
+        const img = item.querySelector("img");
+        const desc = item.querySelector("p");
+        const cta = item.querySelector("a[href]");
+        const contentCell = [];
+        if (h) contentCell.push(h);
+        if (desc) contentCell.push(desc);
+        if (cta && cta !== h.closest("a")) contentCell.push(cta);
+        cells.push([img || document.createTextNode(""), contentCell]);
+      });
+    } else {
+      headings.forEach((h3, idx) => {
+        let img = null;
+        let desc = null;
+        let datePara = null;
+        let cta = null;
+        let prev = h3.previousElementSibling;
+        while (prev) {
+          if (prev.tagName === "P" && prev.querySelector("img")) {
+            img = prev.querySelector("img");
+            break;
+          }
+          if (prev.tagName === "IMG") {
+            img = prev;
+            break;
+          }
+          if (prev.tagName === "P" && !prev.querySelector("a") && !prev.querySelector("img") && prev.textContent.trim().length < 30) {
+            datePara = prev;
+          }
+          prev = prev.previousElementSibling;
+        }
+        let next = h3.nextElementSibling;
+        const forwardContent = [];
+        while (next) {
+          if (next.tagName === "H3") break;
+          if (next.tagName === "P" && next.querySelector("img")) break;
+          if (next.tagName === "IMG") break;
+          if (next.tagName === "P") {
+            const link = next.querySelector("a[href]");
+            if (link && next.children.length === 1) {
+              cta = link;
+            } else if (next.textContent.trim().length > 0) {
+              forwardContent.push(next);
+            }
+          } else if (next.tagName === "A") {
+            cta = next;
+          }
+          next = next.nextElementSibling;
+        }
+        const imgCell = img || document.createTextNode("");
+        const contentCell = [];
+        if (datePara) contentCell.push(datePara);
+        contentCell.push(h3);
+        forwardContent.forEach((p) => contentCell.push(p));
+        if (cta) contentCell.push(cta);
+        if (contentCell.length > 0) {
+          cells.push([imgCell, contentCell]);
+        }
+      });
+    }
     if (cells.length === 0) return;
     const block = WebImporter.Blocks.createBlock(document, {
       name: "cards",
       cells
     });
-    element.replaceWith(block);
+    if (element !== parent) {
+      element.replaceWith(block);
+    } else {
+      element.replaceWith(block);
+    }
   }
 
   // tools/importer/parsers/hero.js
   function parse3(element, { document }) {
+    var _a;
     const imgs = Array.from(element.querySelectorAll("img"));
-    const bgImg = imgs.reduce((best, img) => {
-      const w = img.naturalWidth || img.width || 0;
-      return w > ((best == null ? void 0 : best.naturalWidth) || (best == null ? void 0 : best.width) || 0) ? img : best;
+    const bgImg = imgs.find((img) => {
+      const src = img.getAttribute("src") || "";
+      return src.includes("banner") || src.includes("hero") || img.closest('[class*="image"]') || img.closest('[class*="background"]');
+    }) || imgs.reduce((best, img) => {
+      const w = parseInt(img.getAttribute("width"), 10) || img.naturalWidth || 0;
+      const bw = parseInt(best == null ? void 0 : best.getAttribute("width"), 10) || (best == null ? void 0 : best.naturalWidth) || 0;
+      return w > bw ? img : best;
     }, imgs[0]);
-    const eyebrow = element.querySelector(
-      "p:not(:empty):not(:has(a)):not(:has(img))"
+    const video = element.querySelector("video source, video");
+    const videoSrc = (video == null ? void 0 : video.getAttribute("src")) || ((_a = video == null ? void 0 : video.querySelector("source")) == null ? void 0 : _a.getAttribute("src"));
+    const allParas = Array.from(element.querySelectorAll("p"));
+    const eyebrow = allParas.find(
+      (p) => !p.querySelector("a") && !p.querySelector("img") && p.textContent.trim().length > 2 && p.textContent.trim().length < 60
     );
-    const heading = element.querySelector("h2");
+    const heading = element.querySelector("h2, h1");
     const subheading = element.querySelector("h3");
-    const ctas = Array.from(
-      element.querySelectorAll('a[href]:not([href="#"])')
-    ).filter((a) => a.textContent.trim().length > 0);
+    const seenHrefs = /* @__PURE__ */ new Set();
+    const ctas = [];
+    element.querySelectorAll('a[href]:not([href="#"])').forEach((a) => {
+      const text = a.textContent.trim();
+      if (text.length === 0) return;
+      const href = a.getAttribute("href");
+      if (seenHrefs.has(href)) return;
+      seenHrefs.add(href);
+      ctas.push(a);
+    });
     const cells = [];
     if (bgImg) {
       cells.push([bgImg]);
+    } else if (videoSrc) {
+      const link = document.createElement("a");
+      link.href = videoSrc;
+      link.textContent = videoSrc;
+      cells.push([link]);
     }
     const contentCell = [];
-    if (eyebrow && eyebrow !== heading && eyebrow.textContent.trim().length > 2) {
+    if (eyebrow && eyebrow !== (heading == null ? void 0 : heading.parentElement)) {
       contentCell.push(eyebrow);
     }
     if (heading) contentCell.push(heading);
@@ -275,6 +350,55 @@ var CustomImportScript = (() => {
     }
   }
 
+  // tools/importer/transformers/hp-card-consolidator.js
+  var H3 = {
+    before: "beforeTransform",
+    after: "afterTransform"
+  };
+  function transform3(hookName, element, payload) {
+    if (hookName !== H3.before) return;
+    const root = element.querySelector(".root.responsivegrid") || element.querySelector('[class*="responsivegrid"]') || element;
+    const gridCols = root.querySelectorAll(
+      ".aem-Grid > .aem-GridColumn"
+    );
+    gridCols.forEach((col) => {
+      const h3s = col.querySelectorAll("h3");
+      if (h3s.length < 2) return;
+      const directH3s = Array.from(h3s).filter((h3) => {
+        const depth = getDepth(h3, col);
+        return depth <= 4;
+      });
+      if (directH3s.length < 2) return;
+      const h2 = col.querySelector("h2");
+      if (!h2) return;
+      const wrapper = element.ownerDocument.createElement("div");
+      wrapper.setAttribute("data-cards-wrapper", "true");
+      const h2Container = h2.closest(
+        '[class*="title"], [class*="heading"]'
+      ) || h2.parentElement;
+      let sibling = h2Container.nextElementSibling;
+      const toMove = [];
+      while (sibling) {
+        const next = sibling.nextElementSibling;
+        toMove.push(sibling);
+        sibling = next;
+      }
+      if (toMove.length > 0) {
+        toMove.forEach((el) => wrapper.appendChild(el));
+        h2Container.after(wrapper);
+      }
+    });
+  }
+  function getDepth(child, ancestor) {
+    let depth = 0;
+    let current = child;
+    while (current && current !== ancestor) {
+      depth++;
+      current = current.parentElement;
+    }
+    return depth;
+  }
+
   // tools/importer/import-category-landing.js
   var parsers = {
     carousel: parse,
@@ -306,6 +430,7 @@ var CustomImportScript = (() => {
     ]
   };
   var transformers = [
+    transform3,
     transform,
     ...PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
   ];
@@ -339,12 +464,23 @@ var CustomImportScript = (() => {
       const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
       pageBlocks.forEach((block) => {
         const parser = parsers[block.name];
-        if (parser) {
-          try {
-            parser(block.element, { document, url, params });
-          } catch (e) {
-            console.error(`Parser failed: ${block.name}`, e);
+        if (!parser) return;
+        try {
+          if (block.name === "cards") {
+            const el = block.element;
+            const parent = el.parentElement;
+            if (parent) {
+              let sib = el.nextElementSibling;
+              while (sib) {
+                const next = sib.nextElementSibling;
+                el.appendChild(sib);
+                sib = next;
+              }
+            }
           }
+          parser(block.element, { document, url, params });
+        } catch (e) {
+          console.error(`Parser failed for ${block.name}:`, e);
         }
       });
       executeTransformers("afterTransform", main, payload);

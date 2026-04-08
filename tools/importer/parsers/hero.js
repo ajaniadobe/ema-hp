@@ -3,38 +3,70 @@
 
 /**
  * Parser for hero block.
- * Base: hero. Source: https://www.hp.com/us-en/home.html
- * Structure: 1 column, row 1: background image, row 2: heading + subheading + CTA
- * Used for: WRI featured content, Space workplace article
+ * Base: hero. Source: HP.com pages.
+ * Structure: 1 column, row 1: background image, row 2: text content
+ *
+ * Handles: featured content cards (WRI, Space article),
+ * hero banners with video backgrounds, experience fragments.
  */
 export default function parse(element, { document }) {
-  // Background image (largest img)
+  // Background image — largest img, or video poster
   const imgs = Array.from(element.querySelectorAll('img'));
-  const bgImg = imgs.reduce((best, img) => {
-    const w = img.naturalWidth || img.width || 0;
-    return w > (best?.naturalWidth || best?.width || 0) ? img : best;
+  const bgImg = imgs.find((img) => {
+    const src = img.getAttribute('src') || '';
+    return src.includes('banner') || src.includes('hero')
+      || img.closest('[class*="image"]')
+      || img.closest('[class*="background"]');
+  }) || imgs.reduce((best, img) => {
+    const w = parseInt(img.getAttribute('width'), 10)
+      || img.naturalWidth || 0;
+    const bw = parseInt(best?.getAttribute('width'), 10)
+      || best?.naturalWidth || 0;
+    return w > bw ? img : best;
   }, imgs[0]);
 
+  // Video (if present)
+  const video = element.querySelector('video source, video');
+  const videoSrc = video?.getAttribute('src')
+    || video?.querySelector('source')?.getAttribute('src');
+
   // Text content
-  const eyebrow = element.querySelector(
-    'p:not(:empty):not(:has(a)):not(:has(img))'
+  const allParas = Array.from(element.querySelectorAll('p'));
+  const eyebrow = allParas.find(
+    (p) => !p.querySelector('a') && !p.querySelector('img')
+      && p.textContent.trim().length > 2
+      && p.textContent.trim().length < 60
   );
-  const heading = element.querySelector('h2');
+  const heading = element.querySelector('h2, h1');
   const subheading = element.querySelector('h3');
-  const ctas = Array.from(
-    element.querySelectorAll('a[href]:not([href="#"])')
-  ).filter((a) => a.textContent.trim().length > 0);
+
+  // CTAs — deduplicate by href
+  const seenHrefs = new Set();
+  const ctas = [];
+  element.querySelectorAll('a[href]:not([href="#"])').forEach((a) => {
+    const text = a.textContent.trim();
+    if (text.length === 0) return;
+    const href = a.getAttribute('href');
+    if (seenHrefs.has(href)) return;
+    seenHrefs.add(href);
+    ctas.push(a);
+  });
 
   const cells = [];
 
-  // Row 1: background image
+  // Row 1: background image or video
   if (bgImg) {
     cells.push([bgImg]);
+  } else if (videoSrc) {
+    const link = document.createElement('a');
+    link.href = videoSrc;
+    link.textContent = videoSrc;
+    cells.push([link]);
   }
 
   // Row 2: text content
   const contentCell = [];
-  if (eyebrow && eyebrow !== heading && eyebrow.textContent.trim().length > 2) {
+  if (eyebrow && eyebrow !== heading?.parentElement) {
     contentCell.push(eyebrow);
   }
   if (heading) contentCell.push(heading);

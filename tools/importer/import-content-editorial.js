@@ -6,6 +6,7 @@ import heroParser from './parsers/hero.js';
 
 import hpCleanupTransformer from './transformers/hp-cleanup.js';
 import hpSectionsTransformer from './transformers/hp-sections.js';
+import hpCardConsolidator from './transformers/hp-card-consolidator.js';
 
 const parsers = {
   cards: cardsParser,
@@ -39,6 +40,7 @@ const PAGE_TEMPLATE = {
 };
 
 const transformers = [
+  hpCardConsolidator,
   hpCleanupTransformer,
   ...(PAGE_TEMPLATE.sections.length > 1 ? [hpSectionsTransformer] : []),
 ];
@@ -73,9 +75,24 @@ export default {
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
     pageBlocks.forEach((block) => {
       const parser = parsers[block.name];
-      if (parser) {
-        try { parser(block.element, { document, url, params }); }
-        catch (e) { console.error(`Parser failed: ${block.name}`, e); }
+      if (!parser) return;
+      try {
+        // For cards: expand element to include sibling card items
+        if (block.name === 'cards') {
+          const el = block.element;
+          const parent = el.parentElement;
+          if (parent) {
+            let sib = el.nextElementSibling;
+            while (sib) {
+              const next = sib.nextElementSibling;
+              el.appendChild(sib);
+              sib = next;
+            }
+          }
+        }
+        parser(block.element, { document, url, params });
+      } catch (e) {
+        console.error(`Parser failed for ${block.name}:`, e);
       }
     });
 
