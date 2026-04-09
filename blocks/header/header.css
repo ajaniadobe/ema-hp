@@ -288,6 +288,7 @@ header {
 
     .menu,
     .mega-menu {
+      display: none;
       background-color: var(--color-shaded);
       padding: var(--spacing-xl) 0;
       position: absolute;
@@ -306,6 +307,11 @@ header {
         right: 0;
         z-index: 1001;
       }
+    }
+
+    .is-open > .menu,
+    .is-open > .mega-menu {
+      display: block;
     }
 
     .mega-menu {
