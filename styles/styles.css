@@ -393,7 +393,7 @@ main > .section:first-child {
 }
 
 /* Alternate section backgrounds for visual rhythm */
-main > .section:nth-child(even):not(.dark):not(.shaded):not(.brand) {
+main > .section:nth-child(even):not(.dark, .shaded, .brand) {
   background-color: var(--color-gray-0);
 }
 
@@ -454,7 +454,7 @@ main .section > .default-content:has(> h3):has(> p picture) {
   }
 
   /* Description paragraph */
-  p:not(:has(picture)):not(:has(a)) {
+  p:not(:has(picture), :has(a)) {
     margin: 0;
     font-size: var(--body-font-size-s);
     color: var(--color-foreground-medium);
