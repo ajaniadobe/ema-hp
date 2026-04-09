@@ -3,6 +3,7 @@ import { loadArea, setConfig } from './ak.js';
 const hostnames = ['www.hp.com'];
 
 const locales = {
+  '': { lang: 'en' },
   '/us-en': { lang: 'en' },
 };
 
