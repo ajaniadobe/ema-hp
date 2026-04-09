@@ -289,11 +289,13 @@ header {
     .menu,
     .mega-menu {
       display: none;
-      background-color: var(--color-shaded);
+      background-color: var(--color-white);
       padding: var(--spacing-xl) 0;
       position: absolute;
       left: 0;
       right: 0;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+      z-index: 100;
 
       &.language {
         display: none;
