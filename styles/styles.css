@@ -618,6 +618,34 @@ div[data-status] {
   display: none;
 }
 
+/* News/cards sections: orphaned date + image content beside cards */
+main .section > .default-content:has(> p picture):not(:has(h3)) {
+  display: none;
+}
+
+/* Hero standalone CTA links (not in paragraphs) */
+.hero .hero-foreground > div > a {
+  display: inline-block;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  text-decoration: none;
+  min-width: var(--button-min-width);
+  text-align: center;
+  transition: var(--button-transition);
+  box-sizing: border-box;
+  background-color: var(--color-gray-12);
+  color: var(--color-white);
+  border: none;
+  margin-top: var(--spacing-s);
+}
+
+.hero .hero-foreground > div > a:hover {
+  background-color: var(--color-gray-9);
+}
+
 aem-sidekick {
   opacity: 0;
 
