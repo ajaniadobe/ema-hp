@@ -41,7 +41,7 @@ export default async function init(el) {
   const footerMeta = getMetadata('footer');
   const path = footerMeta || FOOTER_PATH;
   try {
-    const fragment = await loadFragment(`${locale.prefix}${path}`);
+    const fragment = await loadFragment(path);
     fragment.classList.add('footer-content');
 
     const sections = [...fragment.querySelectorAll('.section')];
