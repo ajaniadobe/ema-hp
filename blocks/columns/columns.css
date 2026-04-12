@@ -94,6 +94,94 @@
       align-items: start;
     }
   }
+
+  /* Media wrapper: full-width background image with text overlay */
+  &.media-wrapper {
+    .row {
+      display: block;
+      position: relative;
+      min-height: 400px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .col-1 {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+
+      picture {
+        display: block;
+        height: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+      }
+    }
+
+    .col-2 {
+      position: relative;
+      z-index: 2;
+      color: var(--color-white);
+      padding: var(--spacing-xl) var(--spacing-m);
+      max-width: 100%;
+
+      h2 {
+        color: var(--color-white);
+      }
+
+      h3 {
+        color: rgb(255 255 255 / 85%);
+      }
+
+      p {
+        color: rgb(255 255 255 / 80%);
+      }
+
+      .btn {
+        background-color: var(--color-white);
+        color: var(--color-gray-12);
+
+        &:hover {
+          background-color: var(--color-gray-1);
+        }
+      }
+
+      a {
+        display: inline-block;
+        padding: var(--button-padding);
+        border-radius: var(--button-border-radius);
+        font-size: var(--button-font-size);
+        font-weight: var(--button-font-weight);
+        line-height: var(--button-line-height);
+        text-decoration: none;
+        min-width: var(--button-min-width);
+        text-align: center;
+        background-color: var(--color-white);
+        color: var(--color-gray-12);
+        border: none;
+        transition: var(--button-transition);
+
+        &:hover {
+          background-color: var(--color-gray-1);
+        }
+      }
+    }
+
+    /* Gradient overlay for readability */
+    .row::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgb(0 0 0 / 65%) 0%, rgb(0 0 0 / 20%) 60%, transparent 100%);
+      z-index: 0;
+      border-radius: 16px;
+    }
+  }
 }
 
 @media (width >= 768px) {
@@ -121,5 +209,18 @@
         order: 2;
       }
     }
+
+    &.media-wrapper {
+      .row {
+        min-height: 480px;
+      }
+    }
+  }
+}
+
+@media (width >= 900px) {
+  .columns.media-wrapper .col-2 {
+    max-width: 50%;
+    padding: var(--spacing-xxl) calc(var(--spacing-xxl) * 2);
   }
 }

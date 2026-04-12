@@ -185,6 +185,7 @@ body {
   color: var(--color-text);
   font-family: Arial, sans-serif;
   font-size: var(--body-font-size-m);
+  overflow-wrap: break-word;
   line-height: var(--body-line-height);
   padding: var(--header-height) 0 0;
 
@@ -392,6 +393,12 @@ main > .section:first-child {
   padding-top: 0;
 }
 
+/* Full-bleed carousel section */
+main > .section:has(.carousel) {
+  background-color: var(--color-white);
+  padding-inline: 0;
+}
+
 /* Alternate section backgrounds for visual rhythm */
 main > .section:nth-child(even):not(.dark, .shaded, .brand) {
   background-color: var(--color-gray-0);
@@ -404,8 +411,20 @@ main .section h2 {
 
 /* section variants */
 main .section.dark {
-  background-color: var(--color-gray-12);
+  background: var(--color-gray-12) url('/hp-media/support-desktop.png') center / cover no-repeat;
   color: var(--color-white);
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  h2 {
+    font-size: var(--heading-font-size-xxl);
+    font-weight: 500;
+  }
 
   a {
     color: var(--color-white);

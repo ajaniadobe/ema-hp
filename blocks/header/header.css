@@ -51,7 +51,8 @@ header {
     position: relative;
     height: 100%;
 
-    button {
+    button,
+    a.action-link {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -59,7 +60,10 @@ header {
       padding: 0;
       background-color: transparent;
       height: 100%;
-      width: 64px;
+      width: 44px;
+      cursor: pointer;
+      color: var(--color-gray-12);
+      text-decoration: none;
 
       .icon {
         width: 24px;
@@ -72,6 +76,12 @@ header {
         height: 0;
         overflow: hidden;
       }
+    }
+
+    &.search,
+    &.cart,
+    &.user {
+      display: none;
     }
   }
 
@@ -383,6 +393,12 @@ header {
       .action-wrapper {
         position: relative;
         right: -10px;
+
+        &.search,
+        &.cart,
+        &.user {
+          display: flex;
+        }
       }
 
       .block-content {

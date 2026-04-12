@@ -171,8 +171,45 @@ function decorateNavSection(section) {
   }
 }
 
+function addHeaderActions(section) {
+  const defaultContent = section.querySelector('.default-content');
+  if (!defaultContent) return;
+  const ul = defaultContent.querySelector('ul') || defaultContent;
+
+  const actions = [
+    { icon: 'search', label: 'Search', href: '#search' },
+    { icon: 'cart', label: 'Cart', href: 'https://www.hp.com/us-en/shop/cart' },
+    { icon: 'user', label: 'Sign In', href: '#sign-in' },
+  ];
+
+  const toggle = ul.querySelector('.action-wrapper.toggle');
+
+  actions.forEach(({ icon, label, href }) => {
+    if (ul.querySelector(`.action-wrapper.${icon}`)) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = `action-wrapper ${icon}`;
+    const btn = icon === 'cart'
+      ? Object.assign(document.createElement('a'), { href, className: 'action-link' })
+      : document.createElement('button');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', `icon icon-${icon}`);
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttribute('href', `/img/icons/${icon}.svg#${icon}`);
+    svg.append(use);
+    btn.append(svg);
+    const text = document.createElement('span');
+    text.className = 'text';
+    text.textContent = label;
+    btn.append(text);
+    wrapper.append(btn);
+    if (toggle) ul.insertBefore(wrapper, toggle);
+    else ul.append(wrapper);
+  });
+}
+
 async function decorateActionSection(section) {
   section.classList.add('actions-section');
+  addHeaderActions(section);
 }
 
 async function decorateHeader(fragment) {

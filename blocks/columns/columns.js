@@ -25,7 +25,22 @@ function decorateRows(el, rows) {
   }
 }
 
+function isMediaWrapper(el, rows) {
+  if (rows.length !== 1) return false;
+  const cols = [...rows[0].children];
+  if (cols.length !== 2) return false;
+  const firstCol = cols[0];
+  const secondCol = cols[1];
+  const hasOnlyImage = firstCol.children.length === 1 && firstCol.querySelector('picture');
+  const hasHeading = secondCol.querySelector('h2');
+  const hasCTA = secondCol.querySelector('a');
+  return hasOnlyImage && hasHeading && hasCTA;
+}
+
 export default function init(el) {
   const rows = [...el.children];
+  if (!el.classList.contains('image-cover') && isMediaWrapper(el, rows)) {
+    el.classList.add('media-wrapper');
+  }
   decorateRows(el, rows);
 }

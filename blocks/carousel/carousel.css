@@ -1,5 +1,10 @@
 .carousel {
   background-color: var(--color-white);
+  max-width: 100vw;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .carousel .carousel-slides-container {

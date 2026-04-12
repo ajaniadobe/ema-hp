@@ -77,8 +77,141 @@
   object-fit: contain;
 }
 
+/* Header card: first card with only a heading spans full width */
+.cards > ul > li:first-child:has(h2):not(:has(img)) {
+  grid-column: 1 / -1;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.cards > ul > li:first-child:has(h2):not(:has(img)):hover {
+  box-shadow: none;
+}
+
+/* News-style cards: borderless with larger images and text links */
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul > li {
+  border: none;
+  background: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul > li:hover {
+  box-shadow: none;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-image {
+  background: none;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul > li img {
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-body {
+  padding: var(--spacing-m) 0;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-body h3 {
+  font-size: var(--heading-font-size-s);
+  font-weight: 600;
+  color: var(--color-gray-12);
+  margin-bottom: var(--spacing-s);
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-body a {
+  background: none;
+  color: var(--color-electric-blue-6);
+  padding: var(--spacing-xs) 0;
+  min-width: auto;
+  text-align: left;
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-body a::after {
+  content: ' →';
+}
+
+.section:has(> .block-content > .cards .cards-card-body p:first-child) .cards .cards-card-body a:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+/* Dark section: "How can we help?" heading */
+.dark .cards::before {
+  content: 'How can we help?';
+  display: block;
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 500;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Dark section: support items with background image */
+.dark .cards > ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-xl);
+}
+
+.dark .cards > ul > li {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  text-align: center;
+  overflow: visible;
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.dark .cards > ul > li:hover {
+  box-shadow: none;
+}
+
+.dark .cards .cards-card-body {
+  padding: var(--spacing-xs) 0;
+  align-items: center;
+}
+
+.dark .cards .cards-card-body h3 {
+  color: var(--color-white);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+}
+
+.dark .cards .cards-card-body p {
+  color: var(--color-gray-4);
+}
+
+.dark .cards .cards-card-image {
+  background: none;
+  padding: 0;
+}
+
+.dark .cards > ul > li img {
+  width: 40px;
+  height: 40px;
+  max-height: 40px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
 @media (width >= 900px) {
   .cards > ul {
-    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+  }
+
+  .section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
