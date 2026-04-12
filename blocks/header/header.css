@@ -219,7 +219,8 @@ header {
     }
 
     .menu,
-    .mega-menu {
+    .mega-menu,
+    .main-nav-item > ul {
       display: none;
     }
 
@@ -229,7 +230,8 @@ header {
       }
 
       .menu,
-      .mega-menu {
+      .mega-menu,
+      > ul {
         display: block;
       }
     }
@@ -312,7 +314,8 @@ header {
     }
 
     .is-open > .menu,
-    .is-open > .mega-menu {
+    .is-open > .mega-menu,
+    .is-open > ul {
       display: block;
     }
 
