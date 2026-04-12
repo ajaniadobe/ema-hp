@@ -9,7 +9,7 @@
 
 .cards > ul > li {
   border: 1px solid var(--color-stroke-decorative);
-  border-radius: var(--button-border-radius);
+  border-radius: 16px;
   background-color: var(--color-background-container);
   overflow: hidden;
   transition: box-shadow var(--transition-base);
@@ -41,13 +41,25 @@
 }
 
 .cards .cards-card-body a {
-  color: var(--color-brand);
-  font-weight: 500;
+  display: inline-block;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
   text-decoration: none;
+  min-width: var(--button-min-width);
+  text-align: center;
+  transition: var(--button-transition);
+  box-sizing: border-box;
+  background-color: var(--color-gray-12);
+  color: var(--color-white);
+  border: none;
+  margin-top: auto;
 }
 
 .cards .cards-card-body a:hover {
-  text-decoration: underline;
+  background-color: var(--color-gray-9);
 }
 
 .cards .cards-card-image {
