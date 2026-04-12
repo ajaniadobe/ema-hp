@@ -101,9 +101,13 @@ async function decorateAction(header, pattern) {
     btn.append(textSpan);
   }
   const wrapper = document.createElement('div');
-  wrapper.className = `action-wrapper ${icon.classList[1].replace('icon-', '')}`;
+  const iconClass = icon?.classList?.[1]?.replace('icon-', '') || 'action';
+  wrapper.className = `action-wrapper ${iconClass}`;
   wrapper.append(btn);
-  link.parentElement.parentElement.replaceChild(wrapper, link.parentElement);
+  const linkParent = link.parentElement;
+  if (linkParent?.parentElement) {
+    linkParent.parentElement.replaceChild(wrapper, linkParent);
+  }
 
   if (pattern === '/tools/widgets/language') decorateLanguage(btn);
   if (pattern === '/tools/widgets/scheme') decorateScheme(btn);
@@ -140,11 +144,14 @@ function decorateNavItem(li) {
 function decorateBrandSection(section) {
   section.classList.add('brand-section');
   const brandLink = section.querySelector('a');
-  const [, text] = brandLink.childNodes;
-  const span = document.createElement('span');
-  span.className = 'brand-text';
-  span.append(text);
-  brandLink.append(span);
+  if (!brandLink) return;
+  const textNode = brandLink.childNodes[1];
+  if (textNode) {
+    const span = document.createElement('span');
+    span.className = 'brand-text';
+    span.append(textNode);
+    brandLink.append(span);
+  }
 }
 
 function decorateNavSection(section) {
