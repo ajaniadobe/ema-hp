@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(257px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
   gap: var(--spacing-l);
 }
 
@@ -13,6 +13,8 @@
   background-color: var(--color-background-container);
   overflow: hidden;
   transition: box-shadow var(--transition-base);
+  display: flex;
+  flex-direction: column;
 }
 
 .cards > ul > li:hover {
@@ -21,6 +23,9 @@
 
 .cards .cards-card-body {
   padding: var(--spacing-m);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .cards .cards-card-body p {
@@ -47,10 +52,21 @@
 
 .cards .cards-card-image {
   line-height: 0;
+  background: var(--color-gray-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-m);
 }
 
 .cards > ul > li img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+@media (width >= 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  }
 }
