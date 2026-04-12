@@ -3,6 +3,10 @@ footer {
   color: var(--color-white);
   font-size: var(--body-font-size-s);
 
+  .section {
+    padding: 0;
+  }
+
   a {
     text-decoration: none;
     color: var(--color-gray-4);

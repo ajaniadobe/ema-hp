@@ -41,6 +41,10 @@ header {
       "nav"
       "actions";
     grid-template-rows: var(--header-height) auto 1fr;
+
+    .section {
+      padding: 0;
+    }
   }
 
   .action-wrapper {
