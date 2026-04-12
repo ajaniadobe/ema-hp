@@ -5,6 +5,11 @@ footer {
 
   .section {
     padding: 0;
+
+    .default-content {
+      max-width: initial;
+      margin: initial;
+    }
   }
 
   a {
@@ -21,13 +26,6 @@ footer {
     max-width: var(--grid-container-width);
     margin: 0 auto;
     padding: var(--spacing-xxl) var(--spacing-m);
-  }
-
-  .section {
-    .default-content {
-      max-width: initial;
-      margin: initial;
-    }
   }
 
   /* Footer link groups */
