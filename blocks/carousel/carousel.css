@@ -1,3 +1,7 @@
+.carousel {
+  background-color: var(--color-white);
+}
+
 .carousel .carousel-slides-container {
   position: relative;
 }
