@@ -6,7 +6,7 @@
 
   img {
     display: block;
-    border-radius: var(--button-border-radius);
+    border-radius: 16px;
   }
 
   .row {
