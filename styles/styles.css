@@ -576,6 +576,51 @@ main .section.teal {
   }
 }
 
+main .section.accent-blue {
+  background-color: rgb(154 172 241);
+  color: var(--color-gray-12);
+
+  .cards .cards-card-image {
+    background: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cards .cards-card-image img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 0;
+  }
+}
+
+main .section.purple {
+  background-color: rgb(98 47 156);
+  color: var(--color-white);
+
+  a {
+    color: var(--color-white);
+  }
+
+  .columns .col-1 img {
+    max-width: 100px;
+    border-radius: 0;
+  }
+}
+
+main .section.blue {
+  background-color: rgb(66 133 198);
+  color: var(--color-white);
+
+  a {
+    color: var(--color-white);
+  }
+}
+
 main {
   ul,
   ol {
