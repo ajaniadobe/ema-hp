@@ -60,6 +60,11 @@ const mediaFallbacks = {
   media_135e2ab0e8cc12c14f63ff06c6a18d8a3aa52c1c6: '/hp-media/omnibook-7-desktop.png',
   media_17c0bc09c4565f4d5baab62c77b6c7cc7236b5b7e: '/hp-media/workstations-desktops.png',
   media_1ab3ba07c8e1f3e09be20618c6b3ed5cba2e7ad41: '/hp-media/real-madrid-desktop.png',
+  media_11cec105d73d00863c731e27a82db55feaa550bc3: 'https://www.hp.com/content/dam/sites/worldwide/corporate/sustainable-impact-home/og_final_1.jpg',
+  media_1849863a0a6bc2062b7eb50cf8feffb1ab6e24382: 'https://www.hp.com/content/dam/sites/worldwide/corporate/sustainable-impact-home/Group68642x3.png',
+  media_1add987c33dadf0bac8d40ed7d7139fa573befe67: 'https://www.hp.com/content/dam/sites/worldwide/corporate/hp-information/sustainable-impact-redesign/sustainable-impact-home/DesktopBW.png',
+  media_1cb5ff5f193ee74abe833b5677fb593693b734600: 'https://www.hp.com/content/dam/sites/worldwide/corporate/sustainable-impact-home/horizontal-scroll-mobile-1@2x.png',
+  media_114f1168ca06f0f70d6604427c71f7c97a87c8127: 'https://www.hp.com/content/dam/sites/worldwide/corporate/sustainable-impact-home/horizontal-scroll-mobile-2@2x.jpg',
 };
 
 /* Redirect /us-en/ to /us-en/home */

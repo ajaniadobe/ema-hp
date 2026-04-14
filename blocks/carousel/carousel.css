@@ -234,3 +234,121 @@
     right: var(--spacing-xl);
   }
 }
+
+/* Timeline variant: 3 card-style slides visible at a time */
+.carousel.timeline {
+  background-color: transparent;
+}
+
+.carousel.timeline .carousel-slides {
+  gap: var(--spacing-xl);
+}
+
+.carousel.timeline .carousel-slide {
+  flex: 0 0 calc((100% - var(--spacing-xl) * 2) / 3);
+  flex-direction: column;
+  min-height: auto;
+  scroll-snap-align: start;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-image {
+  flex: none;
+  min-height: auto;
+  border-radius: 0;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-image:empty {
+  display: none;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-image picture > img {
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-content {
+  padding: var(--spacing-l) 0;
+  flex: none;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-content h2 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-content h3 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.carousel.timeline .carousel-slide .carousel-slide-content p {
+  font-size: var(--body-font-size-m);
+  color: var(--color-foreground-default);
+}
+
+/* Hide CTA buttons in timeline slides */
+.carousel.timeline .carousel-slide .carousel-slide-content a {
+  display: none;
+}
+
+/* Navigation buttons: top-right aligned */
+.carousel.timeline .carousel-navigation-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: auto;
+  transform: none;
+  display: flex;
+  gap: var(--spacing-s);
+}
+
+/* Slide indicators: left-aligned progress bar style */
+.carousel.timeline .carousel-slide-indicators {
+  justify-content: flex-start;
+  padding: var(--spacing-l) 0 0;
+}
+
+.carousel.timeline .carousel-slide-indicator button {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--color-gray-4);
+}
+
+.carousel.timeline .carousel-slide-indicator button:disabled {
+  background-color: var(--color-gray-9);
+}
+
+@media (width < 600px) {
+  .carousel.timeline .carousel-slide {
+    flex: 0 0 85%;
+  }
+}
+
+@media (width >= 600px) and (width < 900px) {
+  .carousel.timeline .carousel-slide {
+    flex: 0 0 calc((100% - var(--spacing-xl)) / 2);
+  }
+}
+
+@media (width >= 900px) {
+  .carousel.timeline .carousel-slide {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .carousel.timeline .carousel-slide .carousel-slide-image {
+    flex: none;
+  }
+
+  .carousel.timeline .carousel-slide .carousel-slide-content {
+    flex: none;
+    padding: var(--spacing-l) 0;
+  }
+
+  .carousel.timeline .carousel-slide .carousel-slide-content h3 {
+    font-size: var(--heading-font-size-l);
+  }
+}
