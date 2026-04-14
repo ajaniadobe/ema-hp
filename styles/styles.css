@@ -472,6 +472,50 @@ main .section.shaded {
   background-color: var(--color-gray-1);
 }
 
+/* Sticky sub-navigation */
+main .section.sticky-nav {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-stroke-decorative);
+  padding: 0 var(--spacing-m);
+
+  .default-content {
+    max-width: var(--grid-container-width);
+    margin: 0 auto;
+  }
+
+  ul {
+    display: flex;
+    gap: var(--spacing-xl);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding: var(--spacing-m) 0;
+    color: var(--color-gray-9);
+    text-decoration: none;
+    font-size: var(--body-font-size-s);
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition-base), border-color var(--transition-base);
+
+    &:hover {
+      color: var(--color-gray-12);
+      border-bottom-color: var(--color-gray-12);
+    }
+  }
+}
+
 main .section.brand {
   background-color: var(--color-brand);
   color: var(--color-white);
