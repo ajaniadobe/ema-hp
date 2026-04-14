@@ -366,6 +366,34 @@ a {
   background-color: var(--color-gray-1);
 }
 
+/* Center section CTA links: style standalone link-paragraphs as dark buttons */
+.section.center > .default-content > p:has(> a:only-child) a {
+  display: inline-block;
+  padding: 10px 32px;
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: 500;
+  line-height: var(--button-line-height);
+  text-decoration: none;
+  min-width: var(--button-min-width);
+  text-align: center;
+  transition: var(--button-transition);
+  box-sizing: border-box;
+  background-color: var(--color-gray-12);
+  color: var(--color-white);
+  border: none;
+}
+
+.section.center > .default-content > p:has(> a:only-child) a:hover {
+  background-color: var(--color-gray-9);
+}
+
+/* Side-by-side CTA buttons in center sections */
+.section.center > .default-content > p:has(> a:only-child) {
+  display: inline-block;
+  margin: var(--spacing-xs) var(--spacing-s);
+}
+
 /* focus visible for all interactive elements */
 a:focus-visible,
 button:focus-visible {
@@ -420,9 +448,10 @@ main > .section:has(.cards .cards-card-body > p:first-child + h3) {
   background-color: var(--color-white);
 }
 
-/* Case study / editorial cards sections stay white */
+/* Case study / editorial cards sections: white bg, full-width edge-to-edge */
 main > .section:not(.dark):has(.cards > ul > li:first-child .cards-card-body:empty) {
   background-color: var(--color-white);
+  padding-inline: 0;
 }
 
 /* Media wrapper sections should always be white/transparent, not shaded */
@@ -482,7 +511,7 @@ main .section.center {
 }
 
 main .section.shaded {
-  background-color: var(--color-gray-1);
+  background-color: var(--color-gray-3);
 }
 
 /* Sticky sub-navigation */
@@ -685,6 +714,69 @@ main > .section > .default-content:has(> p:only-child img) {
 
 .hero .hero-foreground > div > a:hover {
   background-color: var(--color-gray-9);
+}
+
+/* Default content CTA links: style standalone link-paragraphs as dark buttons (main only) */
+main .section > .default-content > p:has(> a:only-child) a {
+  display: inline-block;
+  padding: 10px 32px;
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: 500;
+  line-height: var(--button-line-height);
+  text-decoration: none;
+  min-width: var(--button-min-width);
+  text-align: center;
+  transition: var(--button-transition);
+  box-sizing: border-box;
+  background-color: var(--color-gray-12);
+  color: var(--color-white);
+  border: none;
+}
+
+main .section > .default-content > p:has(> a:only-child) a:hover {
+  background-color: var(--color-gray-9);
+}
+
+/* Adjacent CTA paragraphs render side-by-side */
+.section.center > .default-content > p:has(> a:only-child) + p:has(> a:only-child) {
+  margin-top: 0;
+}
+
+/* Center default-content containing only CTA links (no headings) next to cards blocks */
+.section:has(.cards) > .default-content:not(:has(h2, h3, h4)) {
+  text-align: center;
+}
+
+/* Timeline section: shaded background — higher specificity to override case-study white */
+main > .section:not(.dark):has(.cards > ul > li:first-child .cards-card-body h2[id*="years"]) {
+  background-color: var(--color-gray-3);
+}
+
+/* Timeline carousel section */
+main > .section.shaded:has(.carousel.timeline) {
+  background-color: var(--color-gray-3);
+}
+
+/* Timeline carousel: full-width block content */
+main > .section:has(.carousel.timeline) > .block-content {
+  max-width: 100%;
+}
+
+/* Sections with cards-as-heading (h2 header card only): center the section */
+main > .section:has(.cards .cards-card-body h2) {
+  text-align: center;
+}
+
+/* Recognition awards image: constrain width */
+main > .section:has(.cards .cards-card-body h2[id*="recognition"]) > .default-content img {
+  max-width: 800px;
+  height: auto;
+}
+
+/* Editorial/pillar cards sections: full-width block content */
+main > .section:not(.dark):has(.cards > ul > li:first-child .cards-card-body:empty) > .block-content {
+  max-width: 100%;
 }
 
 aem-sidekick {

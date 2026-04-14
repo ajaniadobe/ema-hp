@@ -39,6 +39,28 @@
     .btn {
       margin-top: var(--spacing-m);
     }
+
+    /* CTA links in columns: style as dark buttons */
+    p:has(> a:only-child) a {
+      display: inline-block;
+      padding: 10px 32px;
+      border-radius: var(--button-border-radius);
+      font-size: var(--button-font-size);
+      font-weight: 500;
+      line-height: var(--button-line-height);
+      text-decoration: none;
+      min-width: var(--button-min-width);
+      text-align: center;
+      transition: var(--button-transition);
+      box-sizing: border-box;
+      background-color: var(--color-gray-12);
+      color: var(--color-white);
+      border: none;
+    }
+
+    p:has(> a:only-child) a:hover {
+      background-color: var(--color-gray-9);
+    }
   }
 
   &.gap-xs {

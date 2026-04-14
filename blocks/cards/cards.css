@@ -64,18 +64,36 @@
 
 .cards .cards-card-image {
   line-height: 0;
-  background: var(--color-gray-0);
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-l);
+  padding: 0;
   border-radius: 16px;
+  overflow: hidden;
 }
 
 .cards > ul > li img {
   width: 100%;
-  max-height: 220px;
-  object-fit: contain;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+/* Hide empty card image containers */
+.cards .cards-card-image:empty {
+  display: none;
+}
+
+/* Pillar cards (with images + h3 descriptions): full-width layout */
+.cards:has(.cards-card-image img):has(.cards-card-body h3) > ul,
+.cards:has(.cards-card-body:empty) > ul {
+  gap: var(--spacing-xl);
+}
+
+.cards:has(.cards-card-image img):has(.cards-card-body h3) > ul > li,
+.cards:has(.cards-card-body:empty) > ul > li:not(:first-child) {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /* Header card: first card with only a heading spans full width */
@@ -111,13 +129,19 @@
 
 .cards:has(.cards-card-body:empty) > ul > li:not(:first-child) img {
   max-height: none;
-  height: 240px;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 16px;
 }
 
 .cards:has(.cards-card-body:empty) .cards-card-body:not(:empty) {
   padding: var(--spacing-m) 0;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body p {
+  font-size: var(--body-font-size-l);
+  color: var(--color-foreground-default);
 }
 
 .cards:has(.cards-card-body:empty) .cards-card-body a {
@@ -141,8 +165,9 @@
 }
 
 .cards:has(.cards-card-body:empty) .cards-card-body h3 {
-  font-size: var(--heading-font-size-s);
-  font-weight: 600;
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
 /* News-style cards: borderless with larger images and text links */
@@ -267,6 +292,85 @@
   border-radius: 0;
 }
 
+/* Timeline carousel variant: horizontal scrolling, 3 visible at a time */
+.cards.timeline > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--spacing-xl);
+  padding-bottom: var(--spacing-l);
+  -webkit-overflow-scrolling: touch;
+}
+
+.cards.timeline > ul::-webkit-scrollbar {
+  height: 4px;
+}
+
+.cards.timeline > ul::-webkit-scrollbar-track {
+  background: var(--color-gray-4);
+  border-radius: 2px;
+}
+
+.cards.timeline > ul::-webkit-scrollbar-thumb {
+  background: var(--color-gray-7);
+  border-radius: 2px;
+}
+
+.cards.timeline > ul > li {
+  flex: 0 0 calc((100% - var(--spacing-xl) * 2) / 3);
+  scroll-snap-align: start;
+  border-radius: 0;
+  background: none;
+}
+
+.cards.timeline .cards-card-image {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.cards.timeline .cards-card-image:empty {
+  display: none;
+}
+
+.cards.timeline > ul > li img {
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.cards.timeline .cards-card-body {
+  padding: var(--spacing-l) 0;
+}
+
+.cards.timeline .cards-card-body h3 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-s);
+}
+
+.cards.timeline .cards-card-body p {
+  font-size: var(--body-font-size-m);
+  color: var(--color-foreground-default);
+  line-height: 1.5;
+}
+
+.cards.timeline .cards-card-body a {
+  display: none;
+}
+
+@media (width < 600px) {
+  .cards.timeline > ul > li {
+    flex: 0 0 85%;
+  }
+}
+
 @media (width >= 768px) {
   .cards > ul {
     grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
@@ -274,8 +378,9 @@
 }
 
 @media (width >= 900px) {
+  /* Default: 3 columns for most card layouts */
   .cards > ul {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   /* Product cards with descriptions: 4 columns */
@@ -283,12 +388,8 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Case study cards: 3 columns at desktop */
-  .cards:has(.cards-card-body:empty) > ul {
-    grid-template-columns: repeat(3, 1fr);
+  /* Product tile cards (image + heading only, no description): 6 columns */
+  .cards:has(.cards-card-image img):has(.cards-card-body h3):not(:has(.cards-card-body p)) > ul {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
