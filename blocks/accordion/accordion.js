@@ -10,6 +10,7 @@ export default function init(block) {
 
     const details = document.createElement('details');
     details.className = 'accordion-item';
+    if (summary.querySelector('h6')) details.setAttribute('open', '');
     details.append(summary);
     if (body) details.append(body);
     row.replaceWith(details);
