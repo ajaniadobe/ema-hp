@@ -716,8 +716,8 @@ main > .section > .default-content:has(> p:only-child img) {
   background-color: var(--color-gray-9);
 }
 
-/* Default content CTA links: style standalone link-paragraphs as dark buttons */
-.section > .default-content > p:has(> a:only-child) a {
+/* Default content CTA links: style standalone link-paragraphs as dark buttons (main only) */
+main .section > .default-content > p:has(> a:only-child) a {
   display: inline-block;
   padding: 10px 32px;
   border-radius: var(--button-border-radius);
@@ -734,7 +734,7 @@ main > .section > .default-content:has(> p:only-child img) {
   border: none;
 }
 
-.section > .default-content > p:has(> a:only-child) a:hover {
+main .section > .default-content > p:has(> a:only-child) a:hover {
   background-color: var(--color-gray-9);
 }
 
@@ -753,13 +753,14 @@ main > .section:not(.dark):has(.cards > ul > li:first-child .cards-card-body h2[
   background-color: var(--color-gray-3);
 }
 
-/* Timeline carousel section: full-width for horizontal scroll */
-main > .section:has(.carousel.timeline) > .block-content {
-  max-width: 100%;
-}
-
+/* Timeline carousel section */
 main > .section.shaded:has(.carousel.timeline) {
   background-color: var(--color-gray-3);
+}
+
+/* Timeline carousel: full-width block content */
+main > .section:has(.carousel.timeline) > .block-content {
+  max-width: 100%;
 }
 
 /* Sections with cards-as-heading (h2 header card only): center the section */

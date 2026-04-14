@@ -235,13 +235,14 @@
   }
 }
 
-/* Timeline variant: 3 card-style slides visible at a time */
+/* Timeline variant: 3 card-style slides visible, full width */
 .carousel.timeline {
   background-color: transparent;
 }
 
 .carousel.timeline .carousel-slides {
   gap: var(--spacing-xl);
+  overflow: scroll clip;
 }
 
 .carousel.timeline .carousel-slide {
@@ -324,6 +325,10 @@
 @media (width < 600px) {
   .carousel.timeline .carousel-slide {
     flex: 0 0 85%;
+  }
+
+  .carousel.timeline .carousel-slides {
+    gap: var(--spacing-l);
   }
 }
 
