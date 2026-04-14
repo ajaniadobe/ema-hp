@@ -173,9 +173,32 @@
   }
 
   &.center {
+    .hero-background {
+      position: relative;
+
+      > div {
+        position: relative;
+      }
+
+      picture {
+        position: relative;
+        display: block;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+
     .hero-foreground {
+      position: absolute;
+      inset: 0;
       justify-content: center;
+      align-items: center;
       text-align: center;
+      min-height: var(--min-height);
     }
   }
 }
@@ -202,6 +225,7 @@
     &.center {
       .hero-foreground {
         display: flex;
+        max-width: 100%;
       }
     }
 

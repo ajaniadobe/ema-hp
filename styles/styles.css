@@ -399,6 +399,15 @@ main > .section:has(.carousel) {
   padding-inline: 0;
 }
 
+/* Full-bleed hero section */
+main > .section:has(.hero) {
+  padding: 0;
+
+  > .block-content {
+    max-width: 100%;
+  }
+}
+
 /* All sections default to white — use .shaded or .dark for explicit overrides */
 
 /* Cards sections get gray background to match HP.com */
@@ -466,6 +475,10 @@ main .section.dark {
       background-color: rgb(255 255 255 / 10%);
     }
   }
+}
+
+main .section.center {
+  text-align: center;
 }
 
 main .section.shaded {
@@ -629,8 +642,26 @@ div[data-status] {
 }
 
 /* News/cards sections: orphaned date + image content beside cards */
-main .section > .default-content:has(> p picture):not(:has(h3)) {
+
+/* Hide orphaned card images on homepage (pictures with no associated heading) */
+main > .section:has(.cards) > .default-content:has(> p picture):not(:has(h3)) {
   display: none;
+}
+
+/* Full-width standalone images */
+main > .section:has(> .default-content > p:only-child picture),
+main > .section:has(> .default-content > p:only-child img) {
+  padding: 0;
+}
+
+main > .section > .default-content:has(> p:only-child picture),
+main > .section > .default-content:has(> p:only-child img) {
+  max-width: 100%;
+
+  img {
+    width: 100%;
+    display: block;
+  }
 }
 
 /* Hero standalone CTA links (not in paragraphs) */
