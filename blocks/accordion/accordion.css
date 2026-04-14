@@ -61,3 +61,24 @@
 .accordion details[open] .accordion-item-body {
   border-top: 1px solid var(--color-stroke-decorative);
 }
+
+/* Disclaimer-style accordion: smaller text when using h6 label */
+.accordion details summary:has(h6) {
+  font-size: var(--heading-font-size-xs);
+  font-weight: 500;
+  padding: var(--spacing-s) var(--spacing-m);
+  padding-right: 46px;
+}
+
+.accordion details summary h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.accordion details .accordion-item-body:has(h6) p,
+.accordion details summary:has(h6) + .accordion-item-body p {
+  font-size: var(--body-font-size-xs);
+  line-height: 1.6;
+  color: var(--color-foreground-medium);
+}
