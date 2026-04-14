@@ -91,19 +91,54 @@ function decorateFooterFragment(fragment) {
   fragment.classList.add('footer-content');
   const sections = [...fragment.querySelectorAll('.section')];
 
-  if (sections.length >= 1) {
+  if (sections.length >= 3) {
+    // Standard multi-section fragment
     const copyright = sections.pop();
     copyright.classList.add('section-copyright');
-  }
-
-  if (sections.length >= 1) {
     const legal = sections.pop();
     legal.classList.add('section-legal');
-  }
-
-  if (sections.length > 0) {
     sections[0].classList.add('section-links');
     decorateLinks(sections[0]);
+  } else if (sections.length === 1) {
+    // Single-section DA fragment — split by content patterns
+    const single = sections[0];
+    const dc = single.querySelector('.default-content') || single;
+
+    // Find the last <p> that looks like copyright (starts with ©)
+    const allP = dc.querySelectorAll(':scope > p');
+    let copyrightP = null;
+    allP.forEach((p) => { if (p.textContent.includes('©')) copyrightP = p; });
+
+    // Find the last <ul> that looks like legal links (Recalls, Privacy, etc.)
+    const allUl = dc.querySelectorAll(':scope > ul');
+    let legalUl = null;
+    if (allUl.length > 1) legalUl = allUl[allUl.length - 1];
+
+    // Build copyright section
+    if (copyrightP) {
+      const copyrightSection = document.createElement('div');
+      copyrightSection.className = 'section section-copyright';
+      const copyrightDC = document.createElement('div');
+      copyrightDC.className = 'default-content';
+      copyrightDC.append(copyrightP);
+      copyrightSection.append(copyrightDC);
+      fragment.append(copyrightSection);
+    }
+
+    // Build legal section
+    if (legalUl) {
+      const legalSection = document.createElement('div');
+      legalSection.className = 'section section-legal';
+      const legalDC = document.createElement('div');
+      legalDC.className = 'default-content';
+      legalDC.append(legalUl);
+      legalSection.append(legalDC);
+      fragment.append(legalSection);
+    }
+
+    // Remaining content is the links section
+    single.classList.add('section-links');
+    decorateLinks(single);
   }
 
   const socialGroup = fragment.querySelector('.footer-group:last-child ul')

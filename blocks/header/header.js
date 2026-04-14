@@ -214,9 +214,53 @@ async function decorateActionSection(section) {
 
 async function decorateHeader(fragment) {
   const sections = fragment.querySelectorAll(':scope > .section');
-  if (sections[0]) decorateBrandSection(sections[0]);
-  if (sections[1]) decorateNavSection(sections[1]);
-  if (sections[2]) decorateActionSection(sections[2]);
+
+  if (sections.length >= 3) {
+    // Standard 3-section fragment (brand, nav, actions)
+    decorateBrandSection(sections[0]);
+    decorateNavSection(sections[1]);
+    decorateActionSection(sections[2]);
+  } else if (sections.length === 1) {
+    // Single-section DA fragment — split into brand, nav, actions
+    const single = sections[0];
+    const dc = single.querySelector('.default-content');
+    if (!dc) return;
+
+    // Brand: first p with a link/image
+    const brandP = dc.querySelector(':scope > p:first-child');
+    const brandSection = document.createElement('div');
+    brandSection.className = 'section';
+    const brandDC = document.createElement('div');
+    brandDC.className = 'default-content';
+    if (brandP) brandDC.append(brandP);
+    brandSection.append(brandDC);
+
+    // Nav: first ul with li items
+    const navUl = dc.querySelector(':scope > ul');
+    const navSection = document.createElement('div');
+    navSection.className = 'section';
+    const navDC = document.createElement('div');
+    navDC.className = 'default-content';
+    if (navUl) navDC.append(navUl);
+    navSection.append(navDC);
+
+    // Actions: remaining content (second ul or remaining elements)
+    const actionsSection = document.createElement('div');
+    actionsSection.className = 'section';
+    const actionsDC = document.createElement('div');
+    actionsDC.className = 'default-content';
+    const remaining = dc.querySelector(':scope > ul');
+    if (remaining) actionsDC.append(remaining);
+    actionsSection.append(actionsDC);
+
+    // Remove old single section content and replace with split sections
+    single.remove();
+    fragment.append(brandSection, navSection, actionsSection);
+
+    decorateBrandSection(brandSection);
+    decorateNavSection(navSection);
+    decorateActionSection(actionsSection);
+  }
 
   for (const pattern of HEADER_ACTIONS) {
     decorateAction(fragment, pattern);
