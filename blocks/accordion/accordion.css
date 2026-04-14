@@ -82,3 +82,28 @@
   line-height: 1.6;
   color: var(--color-foreground-medium);
 }
+
+/* Dark section accordion: white text, no border */
+.dark .accordion details {
+  border-color: var(--color-gray-8);
+}
+
+.dark .accordion details summary {
+  color: var(--color-white);
+}
+
+.dark .accordion details[open] summary {
+  background-color: rgb(255 255 255 / 5%);
+}
+
+.dark .accordion details summary::after {
+  border-color: var(--color-white);
+}
+
+.dark .accordion details .accordion-item-body p {
+  color: var(--color-gray-4);
+}
+
+.dark .accordion details[open] .accordion-item-body {
+  border-top-color: var(--color-gray-8);
+}
