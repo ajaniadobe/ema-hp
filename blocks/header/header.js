@@ -227,15 +227,51 @@ async function decorateHeader(fragment) {
  * loads and decorates the header
  * @param {Element} el The header element
  */
+function buildFallbackHeader() {
+  const fragment = document.createElement('div');
+  fragment.classList.add('header-content');
+
+  const brand = document.createElement('div');
+  brand.className = 'section brand-section';
+  brand.innerHTML = '<div class="default-content"><p><a href="/us-en/home"><span class="icon icon-hp-logo"></span><span class="brand-text">HP</span></a></p></div>';
+
+  const nav = document.createElement('div');
+  nav.className = 'section main-nav-section';
+  const links = [
+    ['Laptops', '/us-en/laptops-and-2-in-1s'],
+    ['Desktops', '/us-en/desktops'],
+    ['Printers', '/us-en/printers'],
+    ['Accessories', '/us-en/shop/cat/accessories-88342--1'],
+    ['Subscriptions', '/us-en/all-in-plan'],
+    ['Business Solutions', '/us-en/business-solutions'],
+    ['Support', 'https://support.hp.com/us-en'],
+  ];
+  nav.innerHTML = `<div class="default-content"><nav><ul class="main-nav-list">${links.map(([t, h]) => `<li class="main-nav-item"><p><a class="main-nav-link" href="${h}">${t}</a></p></li>`).join('')}</ul></nav></div>`;
+
+  const actions = document.createElement('div');
+  actions.className = 'section actions-section';
+  actions.innerHTML = '<div class="default-content"><ul></ul></div>';
+
+  fragment.append(brand, nav, actions);
+  addHeaderActions(actions);
+
+  return fragment;
+}
+
 export default async function init(el) {
   const headerMeta = getMetadata('header');
   const path = headerMeta || HEADER_PATH;
   try {
     const fragment = await loadFragment(path);
-    fragment.classList.add('header-content');
-    await decorateHeader(fragment);
-    el.append(fragment);
-  } catch (e) {
-    throw Error(e);
+    const hasContent = fragment && fragment.querySelector('.section');
+    if (hasContent) {
+      fragment.classList.add('header-content');
+      await decorateHeader(fragment);
+      el.append(fragment);
+    } else {
+      el.append(buildFallbackHeader());
+    }
+  } catch {
+    el.append(buildFallbackHeader());
   }
 }
