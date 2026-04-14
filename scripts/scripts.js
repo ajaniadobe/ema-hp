@@ -67,6 +67,21 @@ if (window.location.pathname === '/us-en/' || window.location.pathname === '/us-
   window.location.replace('/us-en/home');
 }
 
+/* Redirect unmigrated pages to hp.com */
+const unmigrated = {
+  '/us-en/all-in-plan': 'https://www.hp.com/us-en/all-in-plan.html',
+  '/us-en/all-in-plan/laptops': 'https://www.hp.com/us-en/all-in-plan/laptops.html',
+  '/us-en/contact-hp/overview': 'https://www.hp.com/us-en/contact-hp/contact.html',
+  '/us-en/developers': 'https://developers.hp.com/',
+  '/us-en/hp-information/partners-and-programs': 'https://www.hp.com/us-en/hp-information/partners-and-programs.html',
+  '/us-en/business-solutions/managed-print-services': 'https://www.hp.com/us-en/business-solutions/managed-print-services.html',
+  '/us-en/gaming': 'https://www.hp.com/us-en/gaming.html',
+  '/us-en/gaming/laptops': 'https://www.hp.com/us-en/gaming/laptops.html',
+};
+if (unmigrated[window.location.pathname]) {
+  window.location.replace(unmigrated[window.location.pathname]);
+}
+
 export async function loadPage() {
   setConfig({ hostnames, locales, linkBlocks, components, decorateArea });
   await loadArea();
