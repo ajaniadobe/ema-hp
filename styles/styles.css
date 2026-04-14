@@ -19,8 +19,8 @@
   --spacing-s: 8px;
   --spacing-xs: 4px;
 
-  /* color schemes */
-  color-scheme: light dark;
+  /* color schemes — force light mode for HP brand consistency */
+  color-scheme: light;
 
   /* HP Electric Blue palette */
   --color-electric-blue-0: #e4eefa;
@@ -89,12 +89,12 @@
   --color-dark: rgb(0 0 0);
   --color-white: #fff;
   --color-black: #000;
-  --color-text: light-dark(var(--color-gray-12), var(--color-light));
-  --color-link: light-dark(var(--color-gray-9), var(--color-gray-1));
+  --color-text: var(--color-gray-12);
+  --color-link: var(--color-gray-9);
   --color-brand: var(--color-electric-blue-7);
-  --color-accent: light-dark(var(--color-electric-blue-7), var(--color-electric-blue-5));
-  --color-background: light-dark(var(--color-light), var(--color-dark));
-  --color-shaded: light-dark(var(--color-gray-1), var(--color-gray-11));
+  --color-accent: var(--color-electric-blue-7);
+  --color-background: var(--color-white);
+  --color-shaded: var(--color-gray-1);
 
   /* semantic mode colors (from HP design system) */
   --color-foreground-default: var(--color-gray-12);
@@ -399,9 +399,26 @@ main > .section:has(.carousel) {
   padding-inline: 0;
 }
 
-/* Alternate section backgrounds for visual rhythm */
-main > .section:nth-child(even):not(.dark, .shaded, .brand) {
-  background-color: var(--color-gray-0);
+/* All sections default to white — use .shaded or .dark for explicit overrides */
+
+/* Cards sections get gray background to match HP.com */
+main > .section:has(> .block-content > .cards):not(.dark) {
+  background-color: var(--color-gray-1);
+}
+
+/* Editorial cards (news, case studies) revert to white background */
+main > .section:has(.cards .cards-card-body > p:first-child + h3) {
+  background-color: var(--color-white);
+}
+
+/* Case study / editorial cards sections stay white */
+main > .section:not(.dark):has(.cards > ul > li:first-child .cards-card-body:empty) {
+  background-color: var(--color-white);
+}
+
+/* Media wrapper sections should always be white/transparent, not shaded */
+main > .section:has(.columns.media-wrapper) {
+  background-color: transparent;
 }
 
 main .section h2 {

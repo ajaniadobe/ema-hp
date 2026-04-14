@@ -8,9 +8,9 @@
 }
 
 .cards > ul > li {
-  border: 1px solid var(--color-stroke-decorative);
+  border: none;
   border-radius: 16px;
-  background-color: var(--color-background-container);
+  background-color: transparent;
   overflow: hidden;
   transition: box-shadow var(--transition-base);
   display: flex;
@@ -18,11 +18,11 @@
 }
 
 .cards > ul > li:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
 }
 
 .cards .cards-card-body {
-  padding: var(--spacing-m);
+  padding: var(--spacing-m) 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -68,12 +68,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-m);
+  padding: var(--spacing-l);
+  border-radius: 16px;
 }
 
 .cards > ul > li img {
   width: 100%;
-  max-height: 180px;
+  max-height: 220px;
   object-fit: contain;
 }
 
@@ -87,6 +88,61 @@
 
 .cards > ul > li:first-child:has(h2):not(:has(img)):hover {
   box-shadow: none;
+}
+
+/* Case study cards: identified by first card having an empty body (no image, just h2) */
+.cards:has(.cards-card-body:empty) > ul > li:not(:first-child) {
+  border: none;
+  background: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.cards:has(.cards-card-body:empty) > ul > li:not(:first-child):hover {
+  box-shadow: none;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-image {
+  background: none;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.cards:has(.cards-card-body:empty) > ul > li:not(:first-child) img {
+  max-height: none;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body:not(:empty) {
+  padding: var(--spacing-m) 0;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body a {
+  background: none;
+  color: var(--color-electric-blue-6);
+  padding: var(--spacing-xs) 0;
+  min-width: auto;
+  text-align: left;
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body a::after {
+  content: ' →';
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body a:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.cards:has(.cards-card-body:empty) .cards-card-body h3 {
+  font-size: var(--heading-font-size-s);
+  font-weight: 600;
 }
 
 /* News-style cards: borderless with larger images and text links */
@@ -159,9 +215,9 @@
 /* Dark section: support items with background image */
 .dark .cards > ul {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-l);
 }
 
 .dark .cards > ul > li {
@@ -170,8 +226,8 @@
   border-radius: 0;
   text-align: center;
   overflow: visible;
-  flex: 0 0 auto;
-  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .dark .cards > ul > li:hover {
@@ -181,16 +237,19 @@
 .dark .cards .cards-card-body {
   padding: var(--spacing-xs) 0;
   align-items: center;
+  flex-direction: column-reverse;
 }
 
 .dark .cards .cards-card-body h3 {
   color: var(--color-white);
   font-size: var(--body-font-size-m);
   font-weight: 400;
+  order: 1;
 }
 
 .dark .cards .cards-card-body p {
   color: var(--color-gray-4);
+  order: 0;
 }
 
 .dark .cards .cards-card-image {
@@ -198,20 +257,38 @@
   padding: 0;
 }
 
-.dark .cards > ul > li img {
-  width: 40px;
-  height: 40px;
-  max-height: 40px;
+.dark .cards > ul > li img,
+.dark .cards:has(.cards-card-body:empty) > ul > li img {
+  width: 36px;
+  height: 36px;
+  max-height: 36px;
   object-fit: contain;
   filter: brightness(0) invert(1);
+  border-radius: 0;
+}
+
+@media (width >= 768px) {
+  .cards > ul {
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+  }
 }
 
 @media (width >= 900px) {
   .cards > ul {
-    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* Product cards with descriptions: 4 columns */
+  .cards:has(.cards-card-body p + p a) > ul {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .section:has(> .block-content > .cards .cards-card-body p:first-child) .cards > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Case study cards: 3 columns at desktop */
+  .cards:has(.cards-card-body:empty) > ul {
     grid-template-columns: repeat(3, 1fr);
   }
 }

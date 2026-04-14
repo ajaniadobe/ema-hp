@@ -62,6 +62,11 @@ const mediaFallbacks = {
   media_1ab3ba07c8e1f3e09be20618c6b3ed5cba2e7ad41: '/hp-media/real-madrid-desktop.png',
 };
 
+/* Redirect /us-en/ to /us-en/home */
+if (window.location.pathname === '/us-en/' || window.location.pathname === '/us-en') {
+  window.location.replace('/us-en/home');
+}
+
 export async function loadPage() {
   setConfig({ hostnames, locales, linkBlocks, components, decorateArea });
   await loadArea();
@@ -97,6 +102,22 @@ export async function loadPage() {
     newImg.loading = inAbsPos ? 'eager' : (img.loading || 'lazy');
     img.parentNode.replaceChild(newImg, img);
   });
+
+  /* Fallback: load broken DA media images from aem.live */
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (isLocal) {
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) return;
+      img.addEventListener('error', () => {
+        const src = img.getAttribute('src') || '';
+        if (src.includes('aem.live')) return;
+        const match = src.match(/(media_[a-f0-9]+\.\w+)/);
+        if (match) {
+          img.src = `https://main--ema-hp--ajaniadobe.aem.live/${match[1]}`;
+        }
+      }, { once: true });
+    });
+  }
 
   /* Rewrite unmigrated .html links to point to www.hp.com */
   document.querySelectorAll('a[href*=".html"]').forEach((a) => {
